@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="SG favicon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0f0f23"/>
+    </linearGradient>
+    <linearGradient id="dot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <!-- Glass border effect -->
+    <linearGradient id="border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Glass border -->
+  <rect width="32" height="32" rx="7" fill="none" stroke="url(#border)" stroke-width="1"/>
+  <!-- SG text -->
+  <text
+    x="3.5"
+    y="22"
+    font-family="'Space Grotesk', 'Inter', -apple-system, system-ui, sans-serif"
+    font-weight="700"
+    font-size="15"
+    fill="#f1f5f9"
+    letter-spacing="-0.03em"
+  >SG</text>
+  <!-- Accent dot -->
+  <circle cx="27.5" cy="24.5" r="2.8" fill="url(#dot)"/>
+</svg>

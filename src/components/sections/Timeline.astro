@@ -1,0 +1,277 @@
+---
+import type { Lang } from '../../i18n/utils';
+import { experiences } from '../../content/projects';
+
+interface Props {
+  t: (key: string) => string;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+---
+
+<section id="experience" class="section" aria-label="Experience">
+  <div class="container">
+    <p class="section-label reveal">{t('experience.section_label')}</p>
+    <h2 class="timeline-heading reveal">{t('experience.heading')}</h2>
+    <p class="timeline-sub reveal">{t('experience.subheading')}</p>
+
+    <div class="timeline">
+      <div class="timeline-line" aria-hidden="true"></div>
+
+      {experiences.map((exp, idx) => (
+        <div class={`timeline-item ${idx % 2 === 0 ? 'timeline-left' : 'timeline-right'}`}>
+          <div class={`timeline-content glass glass-hover ${idx % 2 === 0 ? 'reveal-left' : 'reveal-right'}`}>
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-company">{exp.company}</h3>
+                <p class="exp-role">{exp.role[lang]}</p>
+              </div>
+              <span class="exp-period">{exp.period}</span>
+            </div>
+
+            <ul class="exp-bullets">
+              {exp.bullets[lang].map((bullet) => (
+                <li class="exp-bullet">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+
+            <div class="exp-tags">
+              {exp.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Timeline dot -->
+          <div class="timeline-dot" aria-hidden="true">
+            <div class="dot-inner"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline-heading {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    color: #f1f5f9;
+    margin: 0 0 0.75rem;
+  }
+
+  .timeline-sub {
+    font-size: 0.9375rem;
+    color: #64748b;
+    max-width: 520px;
+    line-height: 1.65;
+    margin: 0 0 3.5rem;
+  }
+
+  /* ─── Timeline layout ──── */
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.4) 15%, rgba(168, 85, 247, 0.4) 85%, transparent);
+  }
+
+  @media (max-width: 768px) {
+    .timeline-line {
+      left: 20px;
+    }
+  }
+
+  /* ─── Timeline items ──── */
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: start;
+    gap: 0;
+  }
+
+  .timeline-left .timeline-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .timeline-left .timeline-dot {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    margin-top: 1.5rem;
+  }
+
+  .timeline-right .timeline-content {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .timeline-right .timeline-dot {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    margin-top: 1.5rem;
+  }
+
+  /* Empty grid cells for alternating layout */
+  .timeline-left::before {
+    content: '';
+    grid-column: 3;
+  }
+
+  .timeline-right::before {
+    content: '';
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  @media (max-width: 768px) {
+    .timeline-item {
+      grid-template-columns: 40px 1fr;
+    }
+
+    .timeline-left .timeline-content,
+    .timeline-right .timeline-content {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .timeline-left .timeline-dot,
+    .timeline-right .timeline-dot {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .timeline-left::before,
+    .timeline-right::before {
+      display: none;
+    }
+  }
+
+  /* ─── Timeline dot ──── */
+  .timeline-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.15);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .dot-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  }
+
+  /* ─── Card ──── */
+  .timeline-content {
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .timeline-content:hover {
+    transform: translateY(-2px);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-company {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 4px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .exp-role {
+    font-size: 0.8125rem;
+    color: #a855f7;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .exp-period {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #475569;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullet {
+    display: flex;
+    gap: 10px;
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.55;
+  }
+
+  .bullet-dot {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.6);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    font-size: 0.6875rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: #a78bfa;
+    white-space: nowrap;
+  }
+</style>

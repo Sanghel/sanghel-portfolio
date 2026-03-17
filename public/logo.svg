@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 40" width="104" height="40" role="img" aria-label="Sanghel Gonzalez logo">
+  <defs>
+    <linearGradient id="dot-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <!-- SG letters -->
+  <text
+    x="2"
+    y="30"
+    font-family="'Space Grotesk', 'Inter', -apple-system, system-ui, sans-serif"
+    font-weight="700"
+    font-size="30"
+    fill="#f1f5f9"
+    letter-spacing="-0.03em"
+  >SG</text>
+  <!-- Accent dot -->
+  <circle cx="81" cy="27" r="5" fill="url(#dot-gradient)"/>
+  <!-- Subtle glow behind dot -->
+  <circle cx="81" cy="27" r="8" fill="url(#dot-gradient)" opacity="0.2"/>
+</svg>

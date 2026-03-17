@@ -1,0 +1,369 @@
+---
+interface Props {
+  t: (key: string) => string;
+}
+const { t } = Astro.props;
+
+interface Tech {
+  name: string;
+  devicon: string;       // devicon class or empty string
+  initials: string;      // shown when no devicon
+  color: string;         // brand color (hex)
+  url: string;
+}
+
+const row1: Tech[] = [
+  { name: 'React',             devicon: 'devicon-react-original colored',       initials: '',    color: '#61DAFB', url: 'https://react.dev' },
+  { name: 'Next.js',           devicon: 'devicon-nextjs-plain',                 initials: '',    color: '#ffffff', url: 'https://nextjs.org' },
+  { name: 'Astro',             devicon: 'devicon-astro-plain',                  initials: '',    color: '#FF5D01', url: 'https://astro.build' },
+  { name: 'Vue',               devicon: 'devicon-vuejs-plain colored',          initials: '',    color: '#42B883', url: 'https://vuejs.org' },
+  { name: 'TypeScript',        devicon: 'devicon-typescript-plain colored',     initials: '',    color: '#3178C6', url: 'https://typescriptlang.org' },
+  { name: 'Tailwind CSS',      devicon: 'devicon-tailwindcss-plain colored',    initials: '',    color: '#06B6D4', url: 'https://tailwindcss.com' },
+  { name: 'Bootstrap',         devicon: 'devicon-bootstrap-plain colored',      initials: '',    color: '#7952B3', url: 'https://getbootstrap.com' },
+  { name: 'Material UI',       devicon: 'devicon-materialui-plain colored',     initials: '',    color: '#0081CB', url: 'https://mui.com' },
+  { name: 'Styled Components', devicon: 'devicon-styledcomponents-plain colored', initials: '', color: '#DB7093', url: 'https://styled-components.com' },
+  { name: 'Redux',             devicon: 'devicon-redux-original colored',       initials: '',    color: '#764ABC', url: 'https://redux.js.org' },
+  { name: 'Ant Design',        devicon: '',                                     initials: 'Ant', color: '#1677FF', url: 'https://ant.design' },
+  { name: 'Shadcn/ui',         devicon: '',                                     initials: 'cn',  color: '#a3a3a3', url: 'https://ui.shadcn.com' },
+  { name: 'React Hook Form',   devicon: '',                                     initials: 'RHF', color: '#EC5990', url: 'https://react-hook-form.com' },
+  { name: 'Formik',            devicon: '',                                     initials: 'FMK', color: '#0052CC', url: 'https://formik.org' },
+];
+
+const row2: Tech[] = [
+  { name: 'Git',               devicon: 'devicon-git-plain colored',            initials: '',    color: '#F05032', url: 'https://git-scm.com' },
+  { name: 'GitHub',            devicon: 'devicon-github-original',              initials: '',    color: '#e2e8f0', url: 'https://github.com' },
+  { name: 'GitLab',            devicon: 'devicon-gitlab-plain colored',         initials: '',    color: '#FC6D26', url: 'https://gitlab.com' },
+  { name: 'Bitbucket',         devicon: 'devicon-bitbucket-plain colored',      initials: '',    color: '#0052CC', url: 'https://bitbucket.org' },
+  { name: 'Heroku',            devicon: 'devicon-heroku-plain colored',         initials: '',    color: '#430098', url: 'https://heroku.com' },
+  { name: 'GitHub Actions',    devicon: 'devicon-github-original',              initials: '',    color: '#2088FF', url: 'https://github.com/features/actions' },
+  { name: 'AWS Amplify',       devicon: 'devicon-amazonwebservices-plain colored', initials: '', color: '#FF9900', url: 'https://aws.amazon.com/amplify' },
+  { name: 'TanStack Query',    devicon: '',                                     initials: 'TQ',  color: '#FF4154', url: 'https://tanstack.com/query' },
+  { name: 'Zustand',           devicon: '',                                     initials: 'Zst', color: '#8B7355', url: 'https://zustand-demo.pmnd.rs' },
+  { name: 'Zod',               devicon: '',                                     initials: 'Zod', color: '#3E67B1', url: 'https://zod.dev' },
+  { name: 'Yup',               devicon: '',                                     initials: 'Yup', color: '#6B4FBB', url: 'https://github.com/jquense/yup' },
+  { name: 'Prismic',           devicon: '',                                     initials: 'Prs', color: '#5163BA', url: 'https://prismic.io' },
+  { name: 'Next Auth',         devicon: '',                                     initials: 'Auth', color: '#7C3AED', url: 'https://next-auth.js.org' },
+  { name: 'Form.io',           devicon: '',                                     initials: 'F.io', color: '#27AE60', url: 'https://form.io' },
+];
+---
+
+<section id="skills" class="section skills-section" aria-label="Skills">
+  <div class="container">
+    <p class="section-label reveal">{t('skills.section_label')}</p>
+    <h2 class="skills-heading reveal">{t('skills.heading')}</h2>
+    <p class="skills-sub reveal">{t('skills.subheading')}</p>
+  </div>
+
+  <!-- Row 1 — scrolls left -->
+  <div class="marquee-outer" aria-label="Frontend & styling technologies">
+    <div class="marquee-fade-left" aria-hidden="true"></div>
+    <div class="marquee-fade-right" aria-hidden="true"></div>
+    <div class="marquee-track marquee-left">
+      <!-- Set 1 -->
+      {row1.map((tech) => (
+        <a
+          href={tech.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tech-pill"
+          aria-label={tech.name}
+          data-name={tech.name}
+        >
+          {tech.devicon ? (
+            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          ) : (
+            <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
+              {tech.initials}
+            </span>
+          )}
+          <span class="tech-label">{tech.name}</span>
+        </a>
+      ))}
+      <!-- Set 2 (duplicate for seamless loop) -->
+      {row1.map((tech) => (
+        <a
+          href={tech.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tech-pill"
+          aria-label={tech.name}
+          data-name={tech.name}
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          {tech.devicon ? (
+            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          ) : (
+            <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
+              {tech.initials}
+            </span>
+          )}
+          <span class="tech-label">{tech.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Row 2 — scrolls right -->
+  <div class="marquee-outer" aria-label="Tools & libraries">
+    <div class="marquee-fade-left" aria-hidden="true"></div>
+    <div class="marquee-fade-right" aria-hidden="true"></div>
+    <div class="marquee-track marquee-right">
+      <!-- Set 1 -->
+      {row2.map((tech) => (
+        <a
+          href={tech.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tech-pill"
+          aria-label={tech.name}
+          data-name={tech.name}
+        >
+          {tech.devicon ? (
+            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          ) : (
+            <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
+              {tech.initials}
+            </span>
+          )}
+          <span class="tech-label">{tech.name}</span>
+        </a>
+      ))}
+      <!-- Set 2 (duplicate for seamless loop) -->
+      {row2.map((tech) => (
+        <a
+          href={tech.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tech-pill"
+          aria-label={tech.name}
+          data-name={tech.name}
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          {tech.devicon ? (
+            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          ) : (
+            <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
+              {tech.initials}
+            </span>
+          )}
+          <span class="tech-label">{tech.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    overflow: hidden;
+  }
+
+  .skills-heading {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    color: #f1f5f9;
+    margin: 0 0 0.75rem;
+  }
+
+  .skills-sub {
+    font-size: 0.9375rem;
+    color: #64748b;
+    max-width: 520px;
+    line-height: 1.65;
+    margin: 0 0 3rem;
+  }
+
+  /* ─── Marquee wrapper ─────────────────────────────────────────── */
+  .marquee-outer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    /* Pause all children when hovering this row */
+  }
+
+  .marquee-outer:hover .marquee-track {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+
+  /* Edge fade masks — cross-browser (webkit prefix for Safari) */
+  .marquee-fade-left,
+  .marquee-fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .marquee-fade-left {
+    left: 0;
+    background: -webkit-linear-gradient(left, #030712 0%, transparent 100%);
+    background: linear-gradient(to right, #030712 0%, transparent 100%);
+  }
+
+  .marquee-fade-right {
+    right: 0;
+    background: -webkit-linear-gradient(right, #030712 0%, transparent 100%);
+    background: linear-gradient(to left, #030712 0%, transparent 100%);
+  }
+
+  /* ─── Track ───────────────────────────────────────────────────── */
+  .marquee-track {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    /* Safari critical: prevent wrapping */
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    /* Explicit width for Safari — max-content can fail in older versions */
+    width: -webkit-max-content;
+    width: max-content;
+    /* Prevent line breaks inside the track */
+    white-space: nowrap;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    /* Hardware-accelerate the animation */
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Scroll LEFT: starts at 0, moves to -50% (= one full set width) */
+  @-webkit-keyframes marquee-left {
+    from { -webkit-transform: translateX(0); transform: translateX(0); }
+    to   { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+  }
+  @keyframes marquee-left {
+    from { -webkit-transform: translateX(0); transform: translateX(0); }
+    to   { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+  }
+
+  /* Scroll RIGHT: starts at -50%, moves to 0 */
+  @-webkit-keyframes marquee-right {
+    from { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+    to   { -webkit-transform: translateX(0); transform: translateX(0); }
+  }
+  @keyframes marquee-right {
+    from { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+    to   { -webkit-transform: translateX(0); transform: translateX(0); }
+  }
+
+  .marquee-left {
+    -webkit-animation: marquee-left 35s linear infinite;
+    animation: marquee-left 35s linear infinite;
+  }
+
+  .marquee-right {
+    -webkit-animation: marquee-right 40s linear infinite;
+    animation: marquee-right 40s linear infinite;
+  }
+
+  /* ─── Tech pill ───────────────────────────────────────────────── */
+  .tech-pill {
+    position: relative;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    /* Reset white-space so content inside pill can wrap normally */
+    white-space: normal;
+    gap: 6px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-transition: background 0.2s ease, border-color 0.2s ease, -webkit-transform 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    min-width: 80px;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Prevent Safari from collapsing the pill */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    vertical-align: top;
+  }
+
+  .tech-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(168, 85, 247, 0.3);
+    -webkit-transform: translateY(-3px);
+    transform: translateY(-3px);
+  }
+
+  /* ─── Devicon ─────────────────────────────────────────────────── */
+  .tech-icon {
+    font-size: 2rem;
+    line-height: 1;
+    display: block;
+    -webkit-transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+  }
+
+  .tech-pill:hover .tech-icon {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  /* ─── Text/initials fallback icon ─────────────────────────────── */
+  .tech-initials {
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    -webkit-transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+  }
+
+  .tech-pill:hover .tech-initials {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  /* ─── Tech name label ─────────────────────────────────────────── */
+  .tech-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #475569;
+    white-space: nowrap;
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+    text-align: center;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tech-pill:hover .tech-label {
+    color: #94a3b8;
+  }
+
+  /* ─── Reduced motion ──────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      -webkit-animation: none !important;
+      animation: none !important;
+    }
+  }
+</style>

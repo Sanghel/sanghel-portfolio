@@ -1,0 +1,147 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'en' | 'es';
+  ogImage?: string;
+}
+
+const {
+  title = 'Sanghel González — Software Developer',
+  description = 'Software Developer with 4+ years of experience crafting premium web experiences.',
+  lang = 'en',
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://sanghelgonzalez.dev');
+
+// Pinned devicon version for reliable CDN caching
+const DEVICON_VERSION = 'v2.16.0';
+const deviconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon@${DEVICON_VERSION}/devicon.min.css`;
+
+// Google Fonts — only variants actually used in the project
+const fontsUrl =
+  'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap';
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!--
+      ─── Fonts ────────────────────────────────────────────────────────────
+      Strategy:
+        1. preconnect to eliminate DNS/TLS round-trips
+        2. preload the CSS so it's fetched at high priority BUT non-blocking
+        3. onload swaps rel to "stylesheet" once it arrives
+        4. <noscript> fallback for JS-disabled environments
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href={fontsUrl}
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href={fontsUrl} />
+    </noscript>
+
+    <!--
+      ─── Devicon ──────────────────────────────────────────────────────────
+      Same non-render-blocking pattern. Pinned to v2.16.0 so the CDN can
+      cache it with a far-future expiry (avoids @latest cache-busting).
+    -->
+    <link
+      rel="preload"
+      href={deviconUrl}
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href={deviconUrl} />
+    </noscript>
+
+    <ClientRouter />
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Scroll reveal via IntersectionObserver — works in all browsers including Safari -->
+    <script>
+      function initRevealObserver() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+          document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-right').forEach((el) => {
+            el.classList.add('is-visible');
+          });
+          document.querySelectorAll<HTMLElement>('.reveal-stagger > *').forEach((child) => {
+            child.classList.add('reveal', 'is-visible');
+          });
+          return;
+        }
+
+        // Assign stagger children a reveal class + CSS delay so they cascade in
+        document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
+          if (parent.closest('#hero')) return;
+          Array.from(parent.children).forEach((child, i) => {
+            (child as HTMLElement).classList.add('reveal');
+            (child as HTMLElement).style.transitionDelay = `${i * 0.08}s`;
+          });
+        });
+
+        // One observer for all reveal elements (outside hero)
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
+        );
+
+        document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-right').forEach((el) => {
+          if (!el.closest('#hero')) io.observe(el);
+        });
+      }
+
+      // Run immediately — IO doesn't need the load event
+      initRevealObserver();
+
+      // Re-init on Astro view transitions
+      document.addEventListener('astro:page-load', initRevealObserver);
+    </script>
+  </body>
+</html>

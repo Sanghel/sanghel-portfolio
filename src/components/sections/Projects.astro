@@ -1,0 +1,362 @@
+---
+import { Image } from 'astro:assets';
+import type { Lang } from '../../i18n/utils';
+import { projects } from '../../content/projects';
+
+interface Props {
+  t: (key: string) => string;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+
+/**
+ * How to add local images (recommended for best Lighthouse score):
+ *
+ * 1. Save your screenshot as WebP in src/assets/projects/
+ *    e.g. src/assets/projects/fintrack-dashboard.webp
+ *
+ * 2. Import it at the top of this file:
+ *    import fintrackImg from '../../assets/projects/fintrack-dashboard.webp';
+ *
+ * 3. Replace the `image` string in projects.ts with the imported object:
+ *    image: fintrackImg   ← Astro will auto-optimize it (srcset, WebP, lazy)
+ *
+ * When `project.image` is an object (imported asset), <Image> is used.
+ * When it's a string (external URL), a plain <img> is used as fallback.
+ */
+const isLocalImage = (img: unknown): img is ImageMetadata =>
+  typeof img === 'object' && img !== null && 'src' in img;
+---
+
+<section id="projects" class="section" aria-label="Projects">
+  <div class="container">
+    <p class="section-label reveal">{t('projects.section_label')}</p>
+    <h2 class="projects-heading reveal">{t('projects.heading')}</h2>
+    <p class="projects-sub reveal">{t('projects.subheading')}</p>
+
+    <div class="projects-grid reveal-stagger">
+      {projects.map((project, i) => (
+        <article class="project-card glass glass-hover" data-tags={project.tags.join(',')}>
+          <!-- Card image -->
+          <div class="card-image">
+            {isLocalImage(project.image) ? (
+              /* Local image: Astro auto-generates WebP + srcset + correct sizes */
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={600}
+                height={340}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding={i === 0 ? 'sync' : 'async'}
+                fetchpriority={i === 0 ? 'high' : 'low'}
+                quality={85}
+                format="webp"
+              />
+            ) : (
+              /* External URL fallback (Unsplash placeholders) */
+              <img
+                src={project.image as string}
+                alt={project.title}
+                width="600"
+                height="340"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding={i === 0 ? 'sync' : 'async'}
+                fetchpriority={i === 0 ? 'high' : 'low'}
+                onerror="this.parentElement.classList.add('no-image')"
+              />
+            )}
+            <div class="card-image-placeholder">
+              <span>{project.title.charAt(0)}</span>
+            </div>
+            {project.isPrivate && (
+              <div class="card-private-badge" aria-label="Private project">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="4.5" width="8" height="5.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                  <path d="M3 4.5V3a2.5 2.5 0 0 1 5 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                Private
+              </div>
+            )}
+          </div>
+
+          <!-- Card body -->
+          <div class="card-body">
+            <h3 class="card-title">{project.title}</h3>
+            <p class="card-desc">{project.description[lang]}</p>
+
+            <!-- Tags -->
+            <div class="card-tags">
+              {project.tags.slice(0, 4).map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+
+            <!-- Links -->
+            <div class="card-links">
+              {project.liveUrl && (
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="card-link card-link-primary">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {t('projects.live')}
+                </a>
+              )}
+              {/* Show code link only for public repos */}
+              {!project.isPrivate && project.codeUrl && (
+                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" class="card-link card-link-ghost">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M9 1.5L12.5 5 9 8.5M5 5.5L1.5 9 5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {t('projects.code')}
+                </a>
+              )}
+              {/* Private projects get a non-clickable pill instead of a code button */}
+              {project.isPrivate && (
+                <span class="card-link card-link-private" aria-label="Private repository">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <rect x="1.5" y="5" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                  Private repo
+                </span>
+              )}
+            </div>
+          </div>
+
+          <!-- Shimmer border on hover -->
+          <div class="card-shimmer" aria-hidden="true"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-heading {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    color: #f1f5f9;
+    margin: 0 0 0.75rem;
+  }
+
+  .projects-sub {
+    font-size: 0.9375rem;
+    color: #64748b;
+    max-width: 560px;
+    line-height: 1.65;
+    margin: 0 0 3rem;
+  }
+
+  /* ─── Grid ──── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Card ──── */
+  .project-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(124, 58, 237, 0.15), 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Shimmer border */
+  .card-shimmer {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(168,85,247,0.1) 50%, rgba(6,182,212,0.2) 100%);
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    padding: 1px;
+  }
+
+  .project-card:hover .card-shimmer {
+    opacity: 1;
+  }
+
+  /* ─── Private badge (overlay on image) ──── */
+  .card-private-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(3, 7, 18, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+  /* ─── Private repo pill (in card links) ──── */
+  .card-link-private {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #475569;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  /* ─── Card image ──── */
+  .card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    position: relative;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover .card-image img {
+    transform: scale(1.04);
+  }
+
+  .card-image-placeholder {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(168, 85, 247, 0.4);
+  }
+
+  .card-image.no-image img { display: none; }
+  .card-image.no-image .card-image-placeholder { display: flex; }
+
+  /* ─── Card body ──── */
+  .card-body {
+    padding: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .card-desc {
+    font-size: 0.8125rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Tags */
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    font-size: 0.6875rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: #a78bfa;
+    white-space: nowrap;
+  }
+
+  /* Links */
+  .card-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .card-link-primary {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: #fff;
+  }
+
+  .card-link-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .card-link-ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+  }
+
+  .card-link-ghost:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+</style>

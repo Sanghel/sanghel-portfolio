@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "contact": "Contact",
+    "hire": "Hire me"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Sanghel González",
+    "role": "Software Developer",
+    "tagline": "I build premium web experiences that are fast, accessible, and delightful.",
+    "cta_primary": "View my work",
+    "cta_secondary": "Download CV",
+    "scroll": "Scroll down"
+  },
+  "about": {
+    "section_label": "About me",
+    "heading": "Turning ideas into\nremarkable products",
+    "bio_1": "I'm a Software Developer with over 4 years of experience crafting high-quality user interfaces. I specialize in building modern, performant applications using React, TypeScript, and the latest frontend technologies.",
+    "bio_2": "I care deeply about the intersection of design and engineering — writing code that not only works, but feels great to use. Currently open to new opportunities.",
+    "stat_years": "Years of experience",
+    "stat_projects": "Projects delivered",
+    "stat_technologies": "Technologies mastered",
+    "stat_years_value": "4+",
+    "stat_projects_value": "20+",
+    "stat_technologies_value": "15+"
+  },
+  "projects": {
+    "section_label": "Projects",
+    "heading": "Selected work",
+    "subheading": "A curated selection of projects I've built — from side projects to production-ready applications.",
+    "live": "Live",
+    "code": "Code",
+    "all": "All",
+    "empty": "No projects found."
+  },
+  "skills": {
+    "section_label": "Tech Stack",
+    "heading": "Technologies I work with",
+    "subheading": "A selection of tools and frameworks I use to build great products.",
+    "frontend": "Frontend",
+    "styling": "Styling",
+    "tooling": "Tooling & DevOps",
+    "other": "Other"
+  },
+  "experience": {
+    "section_label": "Experience",
+    "heading": "Work history",
+    "subheading": "A timeline of the companies and projects that shaped my career."
+  },
+  "contact": {
+    "section_label": "Contact",
+    "heading": "Let's work together",
+    "subheading": "Open to full-time roles, freelance projects, and interesting collaborations. Let's build something great.",
+    "email_label": "Email",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "or": "or find me on"
+  },
+  "footer": {
+    "made_with": "Crafted with",
+    "by": "by Sanghel González",
+    "rights": "All rights reserved."
+  }
+}

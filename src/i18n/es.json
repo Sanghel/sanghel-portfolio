@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "about": "Sobre mí",
+    "projects": "Proyectos",
+    "skills": "Stack",
+    "experience": "Experiencia",
+    "contact": "Contacto",
+    "hire": "Contrátame"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "Sanghel González",
+    "role": "Software Developer",
+    "tagline": "Construyo experiencias web premium que son rápidas, accesibles y deliciosas.",
+    "cta_primary": "Ver proyectos",
+    "cta_secondary": "Descargar CV",
+    "scroll": "Desplazar"
+  },
+  "about": {
+    "section_label": "Sobre mí",
+    "heading": "Convirtiendo ideas en\nproductos extraordinarios",
+    "bio_1": "Soy un Software Developer con más de 4 años de experiencia construyendo interfaces de usuario de alta calidad. Me especializo en desarrollar aplicaciones modernas y eficientes usando React, TypeScript y las últimas tecnologías frontend.",
+    "bio_2": "Me apasiona la intersección entre diseño e ingeniería — escribir código que no solo funcione, sino que se sienta increíble de usar. Actualmente abierto a nuevas oportunidades.",
+    "stat_years": "Años de experiencia",
+    "stat_projects": "Proyectos entregados",
+    "stat_technologies": "Tecnologías dominadas",
+    "stat_years_value": "4+",
+    "stat_projects_value": "20+",
+    "stat_technologies_value": "15+"
+  },
+  "projects": {
+    "section_label": "Proyectos",
+    "heading": "Trabajo seleccionado",
+    "subheading": "Una selección de proyectos que he construido — desde side projects hasta aplicaciones en producción.",
+    "live": "Ver en vivo",
+    "code": "Código",
+    "all": "Todos",
+    "empty": "No se encontraron proyectos."
+  },
+  "skills": {
+    "section_label": "Stack Técnico",
+    "heading": "Tecnologías con las que trabajo",
+    "subheading": "Una selección de herramientas y frameworks que uso para construir grandes productos.",
+    "frontend": "Frontend",
+    "styling": "Estilos",
+    "tooling": "Herramientas y DevOps",
+    "other": "Otros"
+  },
+  "experience": {
+    "section_label": "Experiencia",
+    "heading": "Historial laboral",
+    "subheading": "Una línea de tiempo de las empresas y proyectos que moldearon mi carrera."
+  },
+  "contact": {
+    "section_label": "Contacto",
+    "heading": "Trabajemos juntos",
+    "subheading": "Abierto a posiciones full-time, proyectos freelance y colaboraciones interesantes. Construyamos algo genial.",
+    "email_label": "Email",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "or": "o encuéntrame en"
+  },
+  "footer": {
+    "made_with": "Creado con",
+    "by": "por Sanghel González",
+    "rights": "Todos los derechos reservados."
+  }
+}
