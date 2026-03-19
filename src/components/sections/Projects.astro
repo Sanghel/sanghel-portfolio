@@ -44,7 +44,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
               /* Local image: Astro auto-generates WebP + srcset + correct sizes */
               <Image
                 src={project.image}
-                alt={project.title}
+                alt={project.title[lang]}
                 width={600}
                 height={340}
                 loading={i === 0 ? 'eager' : 'lazy'}
@@ -57,7 +57,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
               /* External URL fallback (Unsplash placeholders) */
               <img
                 src={project.image as string}
-                alt={project.title}
+                alt={project.title[lang]}
                 width="600"
                 height="340"
                 loading={i === 0 ? 'eager' : 'lazy'}
@@ -67,7 +67,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
               />
             )}
             <div class="card-image-placeholder">
-              <span>{project.title.charAt(0)}</span>
+              <span>{project.title[lang].charAt(0)}</span>
             </div>
             {project.isPrivate && (
               <div class="card-private-badge" aria-label="Private project">
@@ -82,7 +82,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
 
           <!-- Card body -->
           <div class="card-body">
-            <h3 class="card-title">{project.title}</h3>
+            <h3 class="card-title">{project.title[lang]}</h3>
             <p class="card-desc">{project.description[lang]}</p>
 
             <!-- Tags -->

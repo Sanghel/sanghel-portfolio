@@ -9,7 +9,7 @@ import formbuilderImg from '../assets/projects/formbuilder.webp';
 
 export interface Project {
   slug: string;
-  title: string;
+  title: { en: string; es: string };
   description: { en: string; es: string };
   tags: string[];
   image: string | ImageMetadata;
@@ -23,7 +23,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'portfolio',
-    title: 'Portfolio',
+    title: { en: 'Portfolio', es: 'Portafolio Personal' },
     description: {
       en: 'Personal portfolio built with Astro and React — fast, accessible, and fully responsive.',
       es: 'Portafolio personal construido con Astro y React — rápido, accesible y completamente responsivo.',
@@ -33,7 +33,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'warranty-phone',
-    title: 'Warranty Phone',
+    title: { en: 'Warranty Phone', es: 'Garantías de Teléfono' },
     description: {
       en: 'Phone warranty management system for handling equipment replacements and repairs.',
       es: 'Sistema de gestión de garantía de teléfonos para cambio de equipo y reparaciones.',
@@ -44,7 +44,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'tickets',
-    title: 'Tickets',
+    title: { en: 'Tickets', es: 'Sistema de Tickets' },
     description: {
       en: 'Enterprise ticket management system for tracking incidents, reports, and service needs with full follow-up.',
       es: 'Sistema de gestión de tickets para empresas, con seguimiento de incidentes, reportes y necesidades.',
@@ -55,7 +55,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'single-sign-on',
-    title: 'Single Sign On',
+    title: { en: 'Single Sign On', es: 'Inicio de Sesión Único' },
     description: {
       en: "Centralized authentication portal that issues session tokens to multiple internal applications, similar to Google's SSO.",
       es: 'Portal centralizado de inicio de sesión que entrega tokens de sesión a otros portales internos.',
@@ -66,7 +66,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'projects',
-    title: 'Projects',
+    title: { en: 'Projects', es: 'Gestión de Proyectos' },
     description: {
       en: 'Project management board similar to Jira, tracking requirements from creation through approval.',
       es: 'Tablero de gestión de proyectos estilo Jira, desde el levantamiento del requerimiento hasta su aprobación.',
@@ -77,7 +77,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'cotizador-flotillas',
-    title: 'Cotizador Flotillas',
+    title: { en: 'Fleet Quoter', es: 'Cotizador de Flotillas' },
     description: {
       en: 'Vehicle fleet quotation tool for managing and pricing fleet configurations.',
       es: 'Cotizador de flotillas de vehículos para gestionar y presupuestar configuraciones de flota.',
@@ -88,7 +88,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'dashboard-tickets',
-    title: 'Dashboard Tickets',
+    title: { en: 'Tickets Dashboard', es: 'Dashboard de Tickets' },
     description: {
       en: 'Metrics dashboard for visualizing and analyzing ticket management performance.',
       es: 'Dashboard de métricas para visualizar y analizar la gestión de tickets.',
@@ -99,7 +99,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'formbuilder',
-    title: 'Formbuilder',
+    title: { en: 'Form Builder', es: 'Constructor de Formularios' },
     description: {
       en: 'Dynamic form builder that generates frontend forms from JSON field definitions, powered by Form.io.',
       es: 'Constructor de formularios dinámicos en el frontend a partir de definiciones JSON de campos, basado en Form.io.',
