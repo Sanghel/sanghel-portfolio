@@ -5,7 +5,8 @@
     "skills": "Skills",
     "experience": "Experience",
     "contact": "Contact",
-    "hire": "Hire me"
+    "hire": "Hire me",
+    "achievements": "Awards"
   },
   "hero": {
     "greeting": "Hi, I'm",
@@ -19,8 +20,8 @@
   "about": {
     "section_label": "About me",
     "heading": "Turning ideas into\nremarkable products",
-    "bio_1": "I'm a Software Developer with over 4 years of experience crafting high-quality user interfaces. I specialize in building modern, performant applications using React, TypeScript, and the latest frontend technologies.",
-    "bio_2": "I care deeply about the intersection of design and engineering — writing code that not only works, but feels great to use. Currently open to new opportunities.",
+    "bio_1": "With 4+ years of experience building high-performance web and mobile applications, I focus on bridging the gap between clean code and business value. I have a proven track record of enhancing Developer Experience (DX) by creating internal libraries that streamline workflows and reduce development time.",
+    "bio_2": "I have experience in team leadership and client-facing roles, translating complex needs into technical solutions. I thrive in high-pressure environments, maintaining a solution-oriented mindset during critical situations. Detail-oriented and committed to delivering flawless user experiences.",
     "stat_years": "Years of experience",
     "stat_projects": "Projects delivered",
     "stat_technologies": "Technologies mastered",
@@ -51,6 +52,11 @@
     "heading": "Work history",
     "subheading": "A timeline of the companies and projects that shaped my career."
   },
+  "achievements": {
+    "section_label": "Achievements",
+    "heading": "Recognition & Awards",
+    "subheading": "Internal awards that reflect a commitment to technical excellence, collaboration, and results."
+  },
   "contact": {
     "section_label": "Contact",
     "heading": "Let's work together",
@@ -62,6 +68,7 @@
   },
   "footer": {
     "made_with": "Crafted with",
+    "and": "and",
     "by": "by Sanghel González",
     "rights": "All rights reserved."
   }

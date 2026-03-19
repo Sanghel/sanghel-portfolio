@@ -5,13 +5,14 @@
     "skills": "Stack",
     "experience": "Experiencia",
     "contact": "Contacto",
-    "hire": "Contrátame"
+    "hire": "Contrátame",
+    "achievements": "Logros"
   },
   "hero": {
     "greeting": "Hola, soy",
     "name": "Sanghel González",
     "role": "Software Developer",
-    "tagline": "Construyo experiencias web premium que son rápidas, accesibles y deliciosas.",
+    "tagline": "Construyo experiencias web premium que son rápidas, accesibles e impecables.",
     "cta_primary": "Ver proyectos",
     "cta_secondary": "Descargar CV",
     "scroll": "Desplazar"
@@ -19,8 +20,8 @@
   "about": {
     "section_label": "Sobre mí",
     "heading": "Convirtiendo ideas en\nproductos extraordinarios",
-    "bio_1": "Soy un Software Developer con más de 4 años de experiencia construyendo interfaces de usuario de alta calidad. Me especializo en desarrollar aplicaciones modernas y eficientes usando React, TypeScript y las últimas tecnologías frontend.",
-    "bio_2": "Me apasiona la intersección entre diseño e ingeniería — escribir código que no solo funcione, sino que se sienta increíble de usar. Actualmente abierto a nuevas oportunidades.",
+    "bio_1": "Con más de 4 años de experiencia construyendo aplicaciones web y móviles de alto rendimiento, me enfoco en conectar el código limpio con el valor de negocio. Tengo un historial comprobado de mejorar la Developer Experience (DX) creando librerías internas que optimizan flujos de trabajo y reducen los tiempos de desarrollo.",
+    "bio_2": "Tengo experiencia en liderazgo de equipos y roles de cara al cliente, traduciendo necesidades complejas en soluciones técnicas. Me desenvuelvo en entornos de alta presión, manteniendo una mentalidad orientada a soluciones en situaciones críticas. Orientado al detalle y comprometido con entregar experiencias de usuario impecables.",
     "stat_years": "Años de experiencia",
     "stat_projects": "Proyectos entregados",
     "stat_technologies": "Tecnologías dominadas",
@@ -51,6 +52,11 @@
     "heading": "Historial laboral",
     "subheading": "Una línea de tiempo de las empresas y proyectos que moldearon mi carrera."
   },
+  "achievements": {
+    "section_label": "Logros",
+    "heading": "Reconocimientos",
+    "subheading": "Premios internos que reflejan el compromiso con la excelencia técnica, la colaboración y los resultados."
+  },
   "contact": {
     "section_label": "Contacto",
     "heading": "Trabajemos juntos",
@@ -62,6 +68,7 @@
   },
   "footer": {
     "made_with": "Creado con",
+    "and": "y",
     "by": "por Sanghel González",
     "rights": "Todos los derechos reservados."
   }

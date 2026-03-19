@@ -1,9 +1,18 @@
+import portfolioImg from '../assets/projects/portfolio.webp';
+import warrantyPhoneImg from '../assets/projects/warranty_phone.webp';
+import ticketsImg from '../assets/projects/tickets.webp';
+import singleSignOnImg from '../assets/projects/single-sign-on.webp';
+import projectsImg from '../assets/projects/projects.webp';
+import cotizadorFlotillasImg from '../assets/projects/cotizador_flotillas.webp';
+import dashboardTicketsImg from '../assets/projects/dashboard_tickets.webp';
+import formbuilderImg from '../assets/projects/formbuilder.webp';
+
 export interface Project {
   slug: string;
   title: string;
   description: { en: string; es: string };
   tags: string[];
-  image: string;
+  image: string | ImageMetadata;
   liveUrl?: string;
   codeUrl?: string;
   featured?: boolean;
@@ -11,70 +20,93 @@ export interface Project {
   isPrivate?: boolean;
 }
 
-// Using Unsplash for placeholder images — replace with your own screenshots when ready
 export const projects: Project[] = [
   {
-    slug: 'fintrack-dashboard',
-    title: 'FinTrack Dashboard',
+    slug: 'portfolio',
+    title: 'Portfolio',
     description: {
-      en: 'A real-time financial analytics dashboard with interactive charts, budget tracking, and AI-powered spending insights. Built with React, D3.js, and a Node.js backend.',
-      es: 'Dashboard de analíticas financieras en tiempo real con gráficos interactivos, seguimiento de presupuesto e insights de gastos con IA. Construido con React, D3.js y Node.js.',
+      en: 'Personal portfolio built with Astro and React — fast, accessible, and fully responsive.',
+      es: 'Portafolio personal construido con Astro y React — rápido, accesible y completamente responsivo.',
     },
-    tags: ['React', 'TypeScript', 'D3.js', 'Node.js', 'PostgreSQL'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop&q=80',
-    liveUrl: 'https://example.com',
-    codeUrl: 'https://github.com/sanghelgonzalez',
-    featured: true,
+    tags: ['Astro', 'React', 'TypeScript', 'Tailwind CSS'],
+    image: portfolioImg,
   },
   {
-    slug: 'designsync',
-    title: 'DesignSync — Component Library',
+    slug: 'warranty-phone',
+    title: 'Warranty Phone',
     description: {
-      en: 'An enterprise-grade design system with 60+ components, full documentation, Storybook integration, and automated accessibility testing. Used across 3 products.',
-      es: 'Sistema de diseño empresarial con +60 componentes, documentación completa, Storybook y pruebas de accesibilidad automatizadas. Usado en 3 productos.',
+      en: 'Phone warranty management system for handling equipment replacements and repairs.',
+      es: 'Sistema de gestión de garantía de teléfonos para cambio de equipo y reparaciones.',
     },
-    tags: ['React', 'TypeScript', 'Storybook', 'Radix UI', 'Tailwind'],
-    image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=340&fit=crop&q=80',
-    liveUrl: 'https://example.com',
-    codeUrl: 'https://github.com/sanghelgonzalez',
-    featured: true,
+    tags: ['Next.js', 'Ant Design', 'TanStack Query', 'NextAuth'],
+    image: warrantyPhoneImg,
+    isPrivate: true,
   },
   {
-    slug: 'storefront',
-    title: 'Storefront — Headless E-commerce',
+    slug: 'tickets',
+    title: 'Tickets',
     description: {
-      en: 'A blazing-fast headless storefront with Next.js and Shopify API. Achieved a 98 Lighthouse score and a 40% improvement in conversion rate vs. the legacy platform.',
-      es: 'Tienda headless ultrarrápida con Next.js y Shopify API. Score 98 en Lighthouse y mejora del 40% en conversión respecto a la plataforma anterior.',
+      en: 'Enterprise ticket management system for tracking incidents, reports, and service needs with full follow-up.',
+      es: 'Sistema de gestión de tickets para empresas, con seguimiento de incidentes, reportes y necesidades.',
     },
-    tags: ['Next.js', 'Shopify', 'TypeScript', 'Tailwind CSS'],
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=340&fit=crop&q=80',
-    liveUrl: 'https://example.com',
-    codeUrl: 'https://github.com/sanghelgonzalez',
-    featured: true,
+    tags: ['Next.js', 'React', 'Material UI', 'NextAuth'],
+    image: ticketsImg,
+    isPrivate: true,
   },
   {
-    slug: 'pulse-monitoring',
-    title: 'Pulse — Server Monitoring',
+    slug: 'single-sign-on',
+    title: 'Single Sign On',
     description: {
-      en: 'Real-time server monitoring with live dashboards, custom alerts, and a CLI. Handles 50k+ events/sec via WebSocket. Stack: Vue.js, Node.js, InfluxDB.',
-      es: 'Monitoreo de servidores en tiempo real con dashboards en vivo, alertas personalizadas y CLI. Procesa +50k eventos/seg vía WebSocket. Stack: Vue.js, Node.js, InfluxDB.',
+      en: "Centralized authentication portal that issues session tokens to multiple internal applications, similar to Google's SSO.",
+      es: 'Portal centralizado de inicio de sesión que entrega tokens de sesión a otros portales internos.',
     },
-    tags: ['Vue.js', 'WebSockets', 'Node.js', 'InfluxDB'],
-    image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600&h=340&fit=crop&q=80',
-    liveUrl: 'https://example.com',
-    codeUrl: 'https://github.com/sanghelgonzalez',
+    tags: ['Next.js', 'NextAuth'],
+    image: singleSignOnImg,
+    isPrivate: true,
   },
   {
-    slug: 'taskflow-pwa',
-    title: 'TaskFlow — PWA',
+    slug: 'projects',
+    title: 'Projects',
     description: {
-      en: 'Mobile-first progressive web app for collaborative task management with offline sync, push notifications, and a native-like UX on iOS and Android.',
-      es: 'App web progresiva mobile-first para gestión de tareas colaborativa, con sincronización offline, notificaciones push y UX nativa en iOS y Android.',
+      en: 'Project management board similar to Jira, tracking requirements from creation through approval.',
+      es: 'Tablero de gestión de proyectos estilo Jira, desde el levantamiento del requerimiento hasta su aprobación.',
     },
-    tags: ['Astro', 'React', 'PWA', 'IndexedDB', 'Workbox'],
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=340&fit=crop&q=80',
-    liveUrl: 'https://example.com',
-    codeUrl: 'https://github.com/sanghelgonzalez',
+    tags: ['Next.js', 'Material UI', 'TanStack Query', 'Redux'],
+    image: projectsImg,
+    isPrivate: true,
+  },
+  {
+    slug: 'cotizador-flotillas',
+    title: 'Cotizador Flotillas',
+    description: {
+      en: 'Vehicle fleet quotation tool for managing and pricing fleet configurations.',
+      es: 'Cotizador de flotillas de vehículos para gestionar y presupuestar configuraciones de flota.',
+    },
+    tags: ['Next.js', 'Redux', 'Prismic', 'Form.io'],
+    image: cotizadorFlotillasImg,
+    isPrivate: true,
+  },
+  {
+    slug: 'dashboard-tickets',
+    title: 'Dashboard Tickets',
+    description: {
+      en: 'Metrics dashboard for visualizing and analyzing ticket management performance.',
+      es: 'Dashboard de métricas para visualizar y analizar la gestión de tickets.',
+    },
+    tags: ['Next.js', 'Material UI', 'TanStack Query'],
+    image: dashboardTicketsImg,
+    isPrivate: true,
+  },
+  {
+    slug: 'formbuilder',
+    title: 'Formbuilder',
+    description: {
+      en: 'Dynamic form builder that generates frontend forms from JSON field definitions, powered by Form.io.',
+      es: 'Constructor de formularios dinámicos en el frontend a partir de definiciones JSON de campos, basado en Form.io.',
+    },
+    tags: ['React', 'Material UI', 'Ant Design', 'Form.io'],
+    image: formbuilderImg,
+    isPrivate: true,
   },
 ];
 
@@ -129,61 +161,106 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    company: 'Acme Corp',
-    role: { en: 'Senior Frontend Developer', es: 'Frontend Developer Senior' },
-    period: '2023 – Present',
+    company: 'Nelumbo Consultores',
+    role: { en: 'Frontend Developer & Tech Lead', es: 'Frontend Developer & Tech Lead' },
+    period: 'Feb 2024 – Present',
     bullets: {
       en: [
-        'Led the redesign of the core product UI, increasing user satisfaction from 3.2 to 4.6/5.',
-        'Built a shared component library now used by 4 engineering teams across the organization.',
-        'Reduced initial bundle size by 42% through code splitting, lazy loading, and tree shaking.',
-        'Mentored 3 junior developers and established frontend code review standards.',
+        'Led frontend development of internal enterprise systems including warranty management, ticket tracking, project management, and SSO platforms.',
+        'Built reusable component libraries and development patterns that improved team DX and reduced feature delivery time.',
+        'Acted as Tech Lead: conducted code reviews, mentored teammates, and made critical architectural decisions.',
+        'Worked directly with stakeholders to translate business requirements into scalable technical solutions.',
       ],
       es: [
-        'Lideré el rediseño de la UI principal, aumentando la satisfacción de usuarios de 3.2 a 4.6/5.',
-        'Construí una librería de componentes compartida usada por 4 equipos de ingeniería.',
-        'Reduje el bundle inicial en un 42% mediante code splitting, lazy loading y tree shaking.',
-        'Mentoreé a 3 desarrolladores junior y establecí estándares de code review para frontend.',
+        'Lideré el desarrollo frontend de sistemas empresariales internos: gestión de garantías, tickets, proyectos y SSO.',
+        'Construí librerías de componentes reutilizables y patrones de desarrollo que mejoraron la DX del equipo.',
+        'Actué como Tech Lead: revisiones de código, mentoría al equipo y decisiones arquitectónicas críticas.',
+        'Trabajé directamente con stakeholders para traducir requerimientos de negocio en soluciones técnicas escalables.',
       ],
     },
-    tags: ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Storybook'],
+    tags: ['Next.js', 'React', 'TypeScript', 'Material UI', 'TanStack Query', 'NextAuth'],
   },
   {
-    company: 'TechStartup S.A.',
+    company: 'Wealth Accelerators Global LLC',
     role: { en: 'Frontend Developer', es: 'Frontend Developer' },
-    period: '2021 – 2023',
+    period: 'Sep 2022 – Dec 2023',
     bullets: {
       en: [
-        'Developed 4 client-facing applications serving 200k+ monthly active users.',
-        'Migrated the main app from Angular to React, reducing codebase complexity by 30%.',
-        'Integrated REST and GraphQL APIs with optimistic UI, reducing perceived latency significantly.',
-        'Collaborated with designers to implement pixel-perfect, accessible, responsive layouts.',
+        'Developed visually appealing, fully responsive interfaces adaptable to all screen sizes.',
+        'Integrated RESTful APIs to connect frontend with backend services.',
+        'Conducted code reviews and resolved bugs to maintain code quality.',
+        'Managed version control using Git and GitHub in a collaborative team environment.',
       ],
       es: [
-        'Desarrollé 4 aplicaciones para usuarios con +200k usuarios activos al mes.',
-        'Migré la app principal de Angular a React, reduciendo la complejidad del código en un 30%.',
-        'Integré APIs REST y GraphQL con UI optimista, reduciendo significativamente la latencia percibida.',
-        'Colaboré con diseñadores para implementar layouts responsivos, accesibles y pixel-perfect.',
+        'Desarrollé interfaces visualmente atractivas y completamente responsivas para cualquier tamaño de pantalla.',
+        'Integré APIs RESTful para conectar el frontend con los servicios del backend.',
+        'Realicé revisiones de código y resolución de bugs para mantener la calidad del proyecto.',
+        'Gestioné el control de versiones con Git y GitHub en un entorno de equipo colaborativo.',
       ],
     },
-    tags: ['React', 'JavaScript', 'GraphQL', 'Sass', 'Angular'],
+    tags: ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'styled-components'],
   },
   {
     company: 'Freelance',
-    role: { en: 'Freelance Frontend Developer', es: 'Frontend Developer Freelance' },
-    period: '2020 – 2021',
+    role: { en: 'Frontend Developer', es: 'Frontend Developer' },
+    period: 'Dec 2021 – Jul 2022',
     bullets: {
       en: [
-        'Delivered 8+ websites and web apps for SMBs and startups across Latin America.',
-        'Specialized in high-performance landing pages with animations and strong Core Web Vitals.',
-        'Managed full project lifecycle: discovery, design, development, deployment, and support.',
+        'Built HTML, CSS, and JavaScript websites and landing pages for small businesses and clients.',
+        'Focused on clean, semantic markup and responsive layouts for all screen sizes.',
+        'Handled full project delivery from initial requirements to deployment.',
       ],
       es: [
-        'Entregué +8 sitios web y aplicaciones para PyMEs y startups en América Latina.',
-        'Especializado en landing pages de alto rendimiento con animaciones y Core Web Vitals sólidos.',
-        'Gestioné el ciclo de vida completo del proyecto: descubrimiento, diseño, desarrollo y soporte.',
+        'Desarrollé sitios web y landing pages con HTML, CSS y JavaScript para pequeñas empresas y clientes.',
+        'Me enfoqué en markup semántico, limpio y layouts responsivos para cualquier dispositivo.',
+        'Gestioné la entrega completa del proyecto desde los requerimientos iniciales hasta el despliegue.',
       ],
     },
-    tags: ['HTML', 'CSS', 'JavaScript', 'WordPress', 'GSAP'],
+    tags: ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
+  },
+];
+
+export interface Achievement {
+  id: string;
+  title: { en: string; es: string };
+  description: { en: string; es: string };
+  issuer: string;
+  year: number;
+  icon: 'genius' | 'champion' | 'teamplayer';
+}
+
+export const achievements: Achievement[] = [
+  {
+    id: 'genius-frontend-2025',
+    title: { en: 'Nelumbo Genius Frontend', es: 'Nelumbo Genius Frontend' },
+    description: {
+      en: 'Awarded to the brightest mind in architecture, code quality, and critical technical decisions.',
+      es: 'Premio a la mente más brillante en arquitectura, calidad de código y decisiones técnicas críticas.',
+    },
+    issuer: 'Nelumbo Consultores',
+    year: 2025,
+    icon: 'genius',
+  },
+  {
+    id: 'grand-champions-2025',
+    title: { en: 'Nelumbo Grand Champions', es: 'Nelumbo Grand Champions' },
+    description: {
+      en: 'Recognizes the person with the best overall performance: technical excellence, attitude, collaboration, and results.',
+      es: 'Reconoce a la persona con mejor desempeño global: excelencia técnica, actitud, colaboración y resultados.',
+    },
+    issuer: 'Nelumbo Consultores',
+    year: 2025,
+    icon: 'champion',
+  },
+  {
+    id: 'team-player-2025',
+    title: { en: 'Nelumbo Team Player', es: 'Nelumbo Team Player' },
+    description: {
+      en: 'Awarded to the person the team most enjoys working with, who goes the extra mile to move everyone forward.',
+      es: 'Premio a la persona con quien el equipo más disfruta trabajar y da la cara para sacar al equipo adelante.',
+    },
+    issuer: 'Nelumbo Consultores',
+    year: 2025,
+    icon: 'teamplayer',
   },
 ];

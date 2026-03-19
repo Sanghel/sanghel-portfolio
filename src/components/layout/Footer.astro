@@ -10,7 +10,9 @@ const { t } = Astro.props;
     <p class="footer-text">
       {t('footer.made_with')}
       <span aria-hidden="true" style="color: #a855f7;">♥</span>
-      {t('footer.by')} · © {new Date().getFullYear()} · {t('footer.rights')}
+      {t('footer.and')}
+      <i class="devicon-astro-plain footer-astro-icon" aria-label="Astro" title="Astro"></i>
+      {t('footer.by')}
     </p>
     <a href="#" class="footer-top" aria-label="Back to top">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,5 +66,11 @@ const { t } = Astro.props;
     border-color: rgba(168, 85, 247, 0.4);
     background: rgba(124, 58, 237, 0.1);
     transform: translateY(-2px);
+  }
+
+  .footer-astro-icon {
+    font-size: 1rem;
+    vertical-align: middle;
+    color: #FF5D01;
   }
 </style>
