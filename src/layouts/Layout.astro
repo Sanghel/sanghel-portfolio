@@ -18,10 +18,6 @@ const {
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://sanghelgonzalez.dev');
 
-// Pinned devicon version for reliable CDN caching
-const DEVICON_VERSION = 'v2.16.0';
-const deviconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon@${DEVICON_VERSION}/devicon.min.css`;
-
 // Google Fonts — only variants actually used in the project
 const fontsUrl =
   'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap';
@@ -72,21 +68,6 @@ const fontsUrl =
     />
     <noscript>
       <link rel="stylesheet" href={fontsUrl} />
-    </noscript>
-
-    <!--
-      ─── Devicon ──────────────────────────────────────────────────────────
-      Same non-render-blocking pattern. Pinned to v2.16.0 so the CDN can
-      cache it with a far-future expiry (avoids @latest cache-busting).
-    -->
-    <link
-      rel="preload"
-      href={deviconUrl}
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link rel="stylesheet" href={deviconUrl} />
     </noscript>
 
     <ClientRouter />

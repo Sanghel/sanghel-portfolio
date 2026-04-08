@@ -6,48 +6,56 @@ const { t } = Astro.props;
 
 interface Tech {
   name: string;
-  devicon: string;       // devicon class or empty string
-  initials: string;      // shown when no devicon
-  color: string;         // brand color (hex)
+  imgSrc: string;   // SimpleIcons CDN URL, or '' when using initials
+  initials: string; // shown only when imgSrc is ''
+  color: string;    // brand hex color
   url: string;
 }
 
 const row1: Tech[] = [
-  { name: 'React',             devicon: 'devicon-react-original colored',       initials: '',    color: '#61DAFB', url: 'https://react.dev' },
-  { name: 'Next.js',           devicon: 'devicon-nextjs-plain',                 initials: '',    color: '#ffffff', url: 'https://nextjs.org' },
-  { name: 'Astro',             devicon: 'devicon-astro-plain',                  initials: '',    color: '#FF5D01', url: 'https://astro.build' },
-  { name: 'Vue',               devicon: 'devicon-vuejs-plain colored',          initials: '',    color: '#42B883', url: 'https://vuejs.org' },
-  { name: 'TypeScript',        devicon: 'devicon-typescript-plain colored',     initials: '',    color: '#3178C6', url: 'https://typescriptlang.org' },
-  { name: 'Tailwind CSS',      devicon: 'devicon-tailwindcss-plain colored',    initials: '',    color: '#06B6D4', url: 'https://tailwindcss.com' },
-  { name: 'Bootstrap',         devicon: 'devicon-bootstrap-plain colored',      initials: '',    color: '#7952B3', url: 'https://getbootstrap.com' },
-  { name: 'Material UI',       devicon: 'devicon-materialui-plain colored',     initials: '',    color: '#0081CB', url: 'https://mui.com' },
-  { name: 'Styled Components', devicon: 'devicon-styledcomponents-plain colored', initials: '', color: '#DB7093', url: 'https://styled-components.com' },
-  { name: 'Redux',             devicon: 'devicon-redux-original colored',       initials: '',    color: '#764ABC', url: 'https://redux.js.org' },
-  { name: 'Ant Design',        devicon: '',                                     initials: 'Ant', color: '#1677FF', url: 'https://ant.design' },
-  { name: 'Shadcn/ui',         devicon: '',                                     initials: 'cn',  color: '#a3a3a3', url: 'https://ui.shadcn.com' },
-  { name: 'React Hook Form',   devicon: '',                                     initials: 'RHF', color: '#EC5990', url: 'https://react-hook-form.com' },
-  { name: 'Formik',            devicon: '',                                     initials: 'FMK', color: '#0052CC', url: 'https://formik.org' },
+  { name: 'React',             imgSrc: 'https://cdn.simpleicons.org/react/61DAFB',            initials: '',    color: '#61DAFB', url: 'https://react.dev' },
+  { name: 'Next.js',           imgSrc: 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',        initials: '',    color: '#ffffff', url: 'https://nextjs.org' },
+  { name: 'Astro',             imgSrc: 'https://cdn.simpleicons.org/astro/FF5D01',            initials: '',    color: '#FF5D01', url: 'https://astro.build' },
+  { name: 'Vue',               imgSrc: 'https://cdn.simpleicons.org/vuedotjs/4FC08D',         initials: '',    color: '#4FC08D', url: 'https://vuejs.org' },
+  { name: 'TypeScript',        imgSrc: 'https://cdn.simpleicons.org/typescript/3178C6',       initials: '',    color: '#3178C6', url: 'https://typescriptlang.org' },
+  { name: 'Tailwind CSS',      imgSrc: 'https://cdn.simpleicons.org/tailwindcss/06B6D4',      initials: '',    color: '#06B6D4', url: 'https://tailwindcss.com' },
+  { name: 'Bootstrap',         imgSrc: 'https://cdn.simpleicons.org/bootstrap/7952B3',        initials: '',    color: '#7952B3', url: 'https://getbootstrap.com' },
+  { name: 'Material UI',       imgSrc: 'https://cdn.simpleicons.org/mui/007FFF',              initials: '',    color: '#007FFF', url: 'https://mui.com' },
+  { name: 'Styled Components', imgSrc: 'https://cdn.simpleicons.org/styledcomponents/DB7093', initials: '',    color: '#DB7093', url: 'https://styled-components.com' },
+  { name: 'Redux',             imgSrc: 'https://cdn.simpleicons.org/redux/764ABC',            initials: '',    color: '#764ABC', url: 'https://redux.js.org' },
+  { name: 'SwiftUI',           imgSrc: 'https://cdn.simpleicons.org/swift/F05138',            initials: '',    color: '#F05138', url: 'https://developer.apple.com/xcode/swiftui' },
+  { name: 'React Native',      imgSrc: 'https://cdn.simpleicons.org/react/61DAFB',            initials: '',    color: '#61DAFB', url: 'https://reactnative.dev' },
+  { name: 'Ant Design',        imgSrc: 'https://cdn.simpleicons.org/antdesign/0170FE',        initials: '',    color: '#0170FE', url: 'https://ant.design' },
+  { name: 'Shadcn/ui',         imgSrc: '',                                                    initials: 'cn',  color: '#a3a3a3', url: 'https://ui.shadcn.com' },
+  { name: 'React Hook Form',   imgSrc: 'https://cdn.simpleicons.org/reacthookform/EC5990',    initials: '',    color: '#EC5990', url: 'https://react-hook-form.com' },
+  { name: 'Formik',            imgSrc: '',                                                    initials: 'FMK', color: '#0052CC', url: 'https://formik.org' },
+  { name: 'Sass',              imgSrc: 'https://cdn.simpleicons.org/sass/EC5990',                                                    initials: 'S', color: '#CC6699', url: 'https://sass-lang.com' },
 ];
 
 const row2: Tech[] = [
-  { name: 'Git',               devicon: 'devicon-git-plain colored',            initials: '',    color: '#F05032', url: 'https://git-scm.com' },
-  { name: 'GitHub',            devicon: 'devicon-github-original',              initials: '',    color: '#e2e8f0', url: 'https://github.com' },
-  { name: 'GitLab',            devicon: 'devicon-gitlab-plain colored',         initials: '',    color: '#FC6D26', url: 'https://gitlab.com' },
-  { name: 'Bitbucket',         devicon: 'devicon-bitbucket-plain colored',      initials: '',    color: '#0052CC', url: 'https://bitbucket.org' },
-  { name: 'Heroku',            devicon: 'devicon-heroku-plain colored',         initials: '',    color: '#430098', url: 'https://heroku.com' },
-  { name: 'GitHub Actions',    devicon: 'devicon-github-original',              initials: '',    color: '#2088FF', url: 'https://github.com/features/actions' },
-  { name: 'AWS Amplify',       devicon: 'devicon-amazonwebservices-plain colored', initials: '', color: '#FF9900', url: 'https://aws.amazon.com/amplify' },
-  { name: 'TanStack Query',    devicon: '',                                     initials: 'TQ',  color: '#FF4154', url: 'https://tanstack.com/query' },
-  { name: 'Zustand',           devicon: '',                                     initials: 'Zst', color: '#8B7355', url: 'https://zustand-demo.pmnd.rs' },
-  { name: 'Zod',               devicon: '',                                     initials: 'Zod', color: '#3E67B1', url: 'https://zod.dev' },
-  { name: 'Yup',               devicon: '',                                     initials: 'Yup', color: '#6B4FBB', url: 'https://github.com/jquense/yup' },
-  { name: 'Prismic',           devicon: '',                                     initials: 'Prs', color: '#5163BA', url: 'https://prismic.io' },
-  { name: 'Next Auth',         devicon: '',                                     initials: 'Auth', color: '#7C3AED', url: 'https://next-auth.js.org' },
-  { name: 'Form.io',           devicon: '',                                     initials: 'F.io', color: '#27AE60', url: 'https://form.io' },
-  { name: 'Node.js',           devicon: 'devicon-nodejs-plain colored',          initials: '',     color: '#339933', url: 'https://nodejs.org' },
-  { name: 'Express',           devicon: 'devicon-express-original',              initials: '',     color: '#e2e8f0', url: 'https://expressjs.com' },
-  { name: 'Jest',              devicon: 'devicon-jest-plain colored',            initials: '',     color: '#C21325', url: 'https://jestjs.io' },
-  { name: 'MySQL',             devicon: 'devicon-mysql-plain colored',           initials: '',     color: '#4479A1', url: 'https://mysql.com' },
+  { name: 'Git',             imgSrc: 'https://cdn.simpleicons.org/git/F05032',            initials: '',     color: '#F05032', url: 'https://git-scm.com' },
+  { name: 'GitHub',          imgSrc: 'https://cdn.simpleicons.org/github/FFFFFF',         initials: '',     color: '#e2e8f0', url: 'https://github.com' },
+  { name: 'GitLab',          imgSrc: 'https://cdn.simpleicons.org/gitlab/FC6D26',         initials: '',     color: '#FC6D26', url: 'https://gitlab.com' },
+  { name: 'Bitbucket',       imgSrc: 'https://cdn.simpleicons.org/bitbucket/0052CC',      initials: '',     color: '#0052CC', url: 'https://bitbucket.org' },
+  { name: 'Heroku',          imgSrc: '',                                                  initials: 'Hku',  color: '#6762A6', url: 'https://heroku.com' },
+  { name: 'GitHub Actions',  imgSrc: 'https://cdn.simpleicons.org/githubactions/2088FF',  initials: '',     color: '#2088FF', url: 'https://github.com/features/actions' },
+  { name: 'AWS Amplify',     imgSrc: '',        initials: 'AWS',     color: '#FF9900', url: 'https://aws.amazon.com/amplify' },
+  { name: 'Socket.io',       imgSrc: 'https://cdn.simpleicons.org/socketdotio/FFFFFF',    initials: '',     color: '#e2e8f0', url: 'https://socket.io' },
+  { name: 'Postman',         imgSrc: 'https://cdn.simpleicons.org/postman/FF6C37',        initials: '',     color: '#FF6C37', url: 'https://postman.com' },
+  { name: 'Insomnia',        imgSrc: 'https://cdn.simpleicons.org/insomnia/4000BF',       initials: '',     color: '#4000BF', url: 'https://insomnia.rest' },
+  { name: 'Cursor',          imgSrc: 'https://cdn.simpleicons.org/cursor/FFFFFF',         initials: '',     color: '#e2e8f0', url: 'https://cursor.com' },
+  { name: 'Claude Code',     imgSrc: 'https://cdn.simpleicons.org/anthropic/D4694A',      initials: '',     color: '#D4694A', url: 'https://claude.ai/code' },
+  { name: 'TanStack Query',  imgSrc: 'https://cdn.simpleicons.org/reactquery/FF4154',     initials: '',     color: '#FF4154', url: 'https://tanstack.com/query' },
+  { name: 'Zustand',         imgSrc: '',                                                  initials: 'Zst',  color: '#8B7355', url: 'https://zustand-demo.pmnd.rs' },
+  { name: 'Zod',             imgSrc: 'https://cdn.simpleicons.org/zod/3E67B1',            initials: '',     color: '#3E67B1', url: 'https://zod.dev' },
+  { name: 'Yup',             imgSrc: '',                                                  initials: 'Yup',  color: '#6B4FBB', url: 'https://github.com/jquense/yup' },
+  { name: 'Prismic',         imgSrc: 'https://cdn.simpleicons.org/prismic/5163BA',        initials: '',     color: '#5163BA', url: 'https://prismic.io' },
+  { name: 'Next Auth',       imgSrc: '',                                                  initials: 'Auth', color: '#7C3AED', url: 'https://next-auth.js.org' },
+  { name: 'Form.io',         imgSrc: '',                                                  initials: 'F.io', color: '#27AE60', url: 'https://form.io' },
+  { name: 'Node.js',         imgSrc: 'https://cdn.simpleicons.org/nodedotjs/339933',      initials: '',     color: '#339933', url: 'https://nodejs.org' },
+  { name: 'Express',         imgSrc: 'https://cdn.simpleicons.org/express/FFFFFF',        initials: '',     color: '#e2e8f0', url: 'https://expressjs.com' },
+  { name: 'Jest',            imgSrc: 'https://cdn.simpleicons.org/jest/C21325',           initials: '',     color: '#C21325', url: 'https://jestjs.io' },
+  { name: 'MySQL',           imgSrc: 'https://cdn.simpleicons.org/mysql/4479A1',          initials: '',     color: '#4479A1', url: 'https://mysql.com' },
 ];
 ---
 
@@ -73,8 +81,8 @@ const row2: Tech[] = [
           aria-label={tech.name}
           data-name={tech.name}
         >
-          {tech.devicon ? (
-            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          {tech.imgSrc ? (
+            <img src={tech.imgSrc} alt="" class="tech-img" aria-hidden="true" width="32" height="32" />
           ) : (
             <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
               {tech.initials}
@@ -95,8 +103,8 @@ const row2: Tech[] = [
           aria-hidden="true"
           tabindex="-1"
         >
-          {tech.devicon ? (
-            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          {tech.imgSrc ? (
+            <img src={tech.imgSrc} alt="" class="tech-img" aria-hidden="true" width="32" height="32" />
           ) : (
             <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
               {tech.initials}
@@ -123,8 +131,8 @@ const row2: Tech[] = [
           aria-label={tech.name}
           data-name={tech.name}
         >
-          {tech.devicon ? (
-            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          {tech.imgSrc ? (
+            <img src={tech.imgSrc} alt="" class="tech-img" aria-hidden="true" width="32" height="32" />
           ) : (
             <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
               {tech.initials}
@@ -145,8 +153,8 @@ const row2: Tech[] = [
           aria-hidden="true"
           tabindex="-1"
         >
-          {tech.devicon ? (
-            <i class={`${tech.devicon} tech-icon`} aria-hidden="true"></i>
+          {tech.imgSrc ? (
+            <img src={tech.imgSrc} alt="" class="tech-img" aria-hidden="true" width="32" height="32" />
           ) : (
             <span class="tech-initials" style={`background:${tech.color}22;color:${tech.color};border-color:${tech.color}44`}>
               {tech.initials}
@@ -306,16 +314,17 @@ const row2: Tech[] = [
     transform: translateY(-3px);
   }
 
-  /* ─── Devicon ─────────────────────────────────────────────────── */
-  .tech-icon {
-    font-size: 2rem;
-    line-height: 1;
+  /* ─── SimpleIcons image icon ──────────────────────────────────── */
+  .tech-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
     display: block;
     -webkit-transition: -webkit-transform 0.2s ease;
     transition: transform 0.2s ease;
   }
 
-  .tech-pill:hover .tech-icon {
+  .tech-pill:hover .tech-img {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
