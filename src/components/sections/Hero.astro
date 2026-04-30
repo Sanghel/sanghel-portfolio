@@ -27,7 +27,9 @@ const { t } = Astro.props;
     </h1>
 
     <!-- Role -->
-    <p class="hero-role hero-anim-3" id="hero-role">{t('hero.role')}</p>
+    <p class="hero-role hero-anim-3" id="hero-role">
+      <span class="hero-role-wrapper">{t('hero.role')}</span>
+    </p>
 
     <!-- Tagline -->
     <p class="hero-tagline hero-anim-4" id="hero-tagline">{t('hero.tagline')}</p>
@@ -357,5 +359,48 @@ const { t } = Astro.props;
       -webkit-transform: none;
       transform: none;
     }
+
+    .hero-role-wrapper::before { animation: none; }
+  }
+
+  /* ─── Role shimmer border ──────────────────────────────── */
+  @property --shimmer-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .hero-role-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    border-radius: 6px;
+  }
+
+  .hero-role-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 7px;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--shimmer-angle),
+      transparent 0deg,
+      transparent 260deg,
+      rgba(184, 186, 255, 0.4) 310deg,
+      #C9E8FF 340deg,
+      rgba(185, 240, 215, 0.5) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: shimmer-rotate 3.5s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer-rotate {
+    to { --shimmer-angle: 360deg; }
   }
 </style>
