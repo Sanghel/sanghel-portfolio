@@ -7,6 +7,7 @@ import cotizadorFlotillasImg from "../assets/projects/cotizador_flotillas.webp";
 import dashboardTicketsImg from "../assets/projects/dashboard_tickets.webp";
 import formbuilderImg from "../assets/projects/formbuilder.webp";
 import solarSystemImg from "../assets/projects/solar_system.webp";
+import expenseManagerImg from "../assets/projects/expense_manager.webp";
 
 export interface Project {
   slug: string;
@@ -33,7 +34,7 @@ export const projects: Project[] = [
       es: "App de gestión financiera personal con IA, registro de gastos por lenguaje natural, soporte multi-divisa (COP, USD, VES), dashboards analíticos en tiempo real, seguimiento de presupuesto, transacciones recurrentes y autenticación con Google OAuth. Construida con Next.js 16 y PostgreSQL vía InsForge.",
     },
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Google OAuth", "Claude AI"],
-    image: "/projects/expense-manager.webp",
+    image: expenseManagerImg,
     liveUrl: "https://expense-manager-pied-three.vercel.app/login",
     codeUrl: "https://github.com/Sanghel/expense-manager",
     featured: true,
