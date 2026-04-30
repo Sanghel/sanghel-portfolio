@@ -18,18 +18,41 @@ const stats = [
       <div class="about-avatar-col reveal-left">
         <div class="avatar-wrapper">
           <div class="avatar-glow"></div>
-          <div class="avatar-frame">
-            <img
-              src="/sanghel_profile_edited.webp"
-              alt="Sanghel González"
-              class="avatar-img"
-              width="320"
-              height="320"
-              loading="lazy"
-              onerror="this.style.display='none';this.parentElement.querySelector('.avatar-placeholder').style.display='flex';"
-            />
-            <div class="avatar-placeholder">
-              <span>SG</span>
+          <!-- Flip card -->
+          <div class="avatar-frame" role="img" aria-label="Sanghel González — hover to reveal">
+            <div class="card-inner">
+              <!-- Front: animated/edited photo -->
+              <div class="card-face card-front">
+                <img
+                  src="/sanghel_profile_edited.webp"
+                  alt="Sanghel González"
+                  class="avatar-img"
+                  width="320"
+                  height="320"
+                  loading="lazy"
+                />
+                <div class="card-hint" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 4v7h7M4 11A8 8 0 1 0 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  hover
+                </div>
+              </div>
+              <!-- Back: real photo -->
+              <div class="card-face card-back">
+                <img
+                  src="/sanghel_profile_real.webp"
+                  alt="Sanghel González"
+                  class="avatar-img"
+                  width="320"
+                  height="320"
+                  loading="lazy"
+                  onerror="this.parentElement.classList.add('no-photo')"
+                />
+                <div class="avatar-placeholder">
+                  <span>SG</span>
+                </div>
+              </div>
             </div>
           </div>
           <!-- Floating badge -->
@@ -97,19 +120,48 @@ const stats = [
   .avatar-glow {
     position: absolute;
     inset: -20px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(184, 186, 255, 0.18) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
 
+  /* ─── Flip card ──── */
   .avatar-frame {
     position: relative;
     width: clamp(240px, 35vw, 320px);
     height: clamp(240px, 35vw, 320px);
     border-radius: 24px;
+    perspective: 900px;
+    cursor: pointer;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+
+  .avatar-frame:hover .card-inner,
+  .avatar-frame:focus-within .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
     overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.04);
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
   }
 
   .avatar-img {
@@ -119,19 +171,49 @@ const stats = [
     display: block;
   }
 
+  /* "hover" hint on front face */
+  .card-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(12, 12, 22, 0.75);
+    border: 1px solid rgba(184, 186, 255, 0.2);
+    backdrop-filter: blur(8px);
+    font-size: 0.6875rem;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    color: rgba(184, 186, 255, 0.7);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .avatar-frame:hover .card-hint {
+    opacity: 0;
+  }
+
+  /* Back face placeholder (shown if real photo fails to load) */
   .avatar-placeholder {
     display: none;
     width: 100%;
     height: 100%;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1));
+    background: linear-gradient(135deg, rgba(184,186,255,0.15), rgba(185,240,215,0.08));
     font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 700;
-    color: #a855f7;
+    color: #B8BAFF;
     letter-spacing: -0.03em;
   }
+
+  .card-back.no-photo img { display: none; }
+  .card-back.no-photo .avatar-placeholder { display: flex; }
 
   .avatar-badge {
     position: absolute;
@@ -142,7 +224,7 @@ const stats = [
     gap: 8px;
     padding: 8px 16px;
     border-radius: 99px;
-    background: rgba(3, 7, 18, 0.9);
+    background: rgba(12, 12, 22, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(12px);
     font-size: 0.8125rem;
@@ -211,6 +293,10 @@ const stats = [
     font-size: 0.75rem;
     color: #94a3b8;
     line-height: 1.3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-inner { transition: none; }
   }
 </style>
 
