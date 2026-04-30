@@ -175,7 +175,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
 
   .project-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(124, 58, 237, 0.15), 0 4px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 48px rgba(184, 186, 255, 0.12), 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   /* Shimmer border */
@@ -185,7 +185,7 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
     border-radius: 16px;
     pointer-events: none;
     opacity: 0;
-    background: linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(168,85,247,0.1) 50%, rgba(6,182,212,0.2) 100%);
+    background: linear-gradient(135deg, rgba(184,186,255,0.25) 0%, rgba(201,232,255,0.1) 50%, rgba(185,240,215,0.15) 100%);
     transition: opacity 0.3s ease;
     z-index: 0;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -263,11 +263,11 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
     inset: 0;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));
+    background: linear-gradient(135deg, rgba(184,186,255,0.12), rgba(185,240,215,0.08));
     font-family: 'Space Grotesk', sans-serif;
     font-size: 3rem;
     font-weight: 700;
-    color: rgba(168, 85, 247, 0.4);
+    color: rgba(184, 186, 255, 0.4);
   }
 
   .card-image.no-image img { display: none; }
@@ -313,12 +313,12 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
   .tag {
     padding: 3px 10px;
     border-radius: 6px;
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(124, 58, 237, 0.2);
+    background: rgba(184, 186, 255, 0.10);
+    border: 1px solid rgba(184, 186, 255, 0.2);
     font-size: 0.6875rem;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
-    color: #a78bfa;
+    color: #C9E8FF;
     white-space: nowrap;
   }
 
@@ -344,8 +344,8 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
   }
 
   .card-link-primary {
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    color: #fff;
+    background: linear-gradient(135deg, #B8BAFF, #C9E8FF);
+    color: #0c0c16;
   }
 
   .card-link-primary:hover {

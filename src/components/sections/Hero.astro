@@ -82,7 +82,7 @@ const { t } = Astro.props;
   .hero-blob-1 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+    background: radial-gradient(circle, #B8BAFF 0%, transparent 70%);
     top: -200px;
     right: -100px;
     animation: float1 12s ease-in-out infinite;
@@ -91,7 +91,7 @@ const { t } = Astro.props;
   .hero-blob-2 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+    background: radial-gradient(circle, #B9F0D7 0%, transparent 70%);
     bottom: -100px;
     left: -50px;
     opacity: 0.2;
@@ -101,7 +101,7 @@ const { t } = Astro.props;
   .hero-blob-3 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+    background: radial-gradient(circle, #C9E8FF 0%, transparent 70%);
     top: 40%;
     left: 40%;
     opacity: 0.15;
@@ -153,11 +153,11 @@ const { t } = Astro.props;
     gap: 8px;
     padding: 6px 14px;
     border-radius: 99px;
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(124, 58, 237, 0.25);
+    background: rgba(184, 186, 255, 0.10);
+    border: 1px solid rgba(184, 186, 255, 0.25);
     font-size: 0.8125rem;
     font-weight: 500;
-    color: #c084fc;
+    color: #C9E8FF;
     margin-bottom: 1.75rem;
   }
 
@@ -166,14 +166,14 @@ const { t } = Astro.props;
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #a855f7;
-    box-shadow: 0 0 6px #a855f7;
+    background: #B8BAFF;
+    box-shadow: 0 0 6px #B8BAFF;
     animation: pulse-dot 2s ease-in-out infinite;
   }
 
   @keyframes pulse-dot {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px #a855f7; }
-    50% { opacity: 0.6; box-shadow: 0 0 12px #a855f7; }
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px #B8BAFF; }
+    50% { opacity: 0.6; box-shadow: 0 0 12px #B8BAFF; }
   }
 
   .hero-name {
@@ -217,19 +217,19 @@ const { t } = Astro.props;
     gap: 8px;
     padding: 12px 24px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    color: #fff;
+    background: linear-gradient(135deg, #B8BAFF, #C9E8FF);
+    color: #0c0c16;
     font-weight: 600;
     font-size: 0.9375rem;
     text-decoration: none;
     transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 24px rgba(124, 58, 237, 0.35);
+    box-shadow: 0 4px 24px rgba(184, 186, 255, 0.30);
   }
 
   .cta-primary:hover {
     opacity: 0.92;
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.45);
+    box-shadow: 0 8px 32px rgba(184, 186, 255, 0.40);
   }
 
   .cta-secondary {
@@ -268,7 +268,7 @@ const { t } = Astro.props;
     display: block;
     width: 40px;
     height: 1px;
-    background: linear-gradient(90deg, #7c3aed, transparent);
+    background: linear-gradient(90deg, #B8BAFF, transparent);
     position: relative;
     overflow: hidden;
   }
@@ -280,7 +280,7 @@ const { t } = Astro.props;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: #a855f7;
+    background: #C9E8FF;
     animation: slide-right 2s ease-in-out infinite;
   }
 

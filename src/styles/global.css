@@ -3,16 +3,16 @@
 /* ─── Design Tokens ───────────────────────────────────────────── */
 @theme {
   /* Colors */
-  --color-bg: #030712;
+  --color-bg: #0c0c16;
   --color-surface: rgba(255, 255, 255, 0.05);
   --color-surface-hover: rgba(255, 255, 255, 0.08);
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-hover: rgba(255, 255, 255, 0.16);
 
-  --color-accent: #7c3aed;
-  --color-accent-light: #a855f7;
-  --color-accent-lighter: #c084fc;
-  --color-cyan: #06b6d4;
+  --color-accent: #B8BAFF;
+  --color-accent-light: #C9E8FF;
+  --color-accent-lighter: #C9E8FF;
+  --color-cyan: #B9F0D7;
 
   --color-text-1: #f1f5f9;
   --color-text-2: #94a3b8;
@@ -35,7 +35,7 @@ html {
 }
 
 body {
-  background-color: #030712;
+  background-color: #0c0c16;
   color: #f1f5f9;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 1rem;
@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Selection ───────────────────────────────────────────────── */
 ::selection {
-  background: rgba(124, 58, 237, 0.35);
+  background: rgba(184, 186, 255, 0.25);
   color: #f1f5f9;
 }
 
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Gradient text ───────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, #B8BAFF 0%, #C9E8FF 50%, #B9F0D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -122,7 +122,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a855f7;
+  color: #C9E8FF;
   margin-bottom: 1rem;
 }
 
@@ -131,7 +131,7 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   width: 1.5rem;
   height: 1px;
-  background: #a855f7;
+  background: #C9E8FF;
 }
 
 /* ─── Reveal animation (initial hidden state + CSS transition) ── */
