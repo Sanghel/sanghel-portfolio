@@ -23,6 +23,22 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "expense-manager",
+    title: {
+      en: "Expense Manager",
+      es: "Gestor de Gastos",
+    },
+    description: {
+      en: "AI-powered personal finance management app with natural language expense logging, multi-currency support (COP, USD, VES), real-time analytics dashboards, budget tracking, recurring transactions, and Google OAuth authentication. Built with Next.js 16 and PostgreSQL via InsForge.",
+      es: "App de gestión financiera personal con IA, registro de gastos por lenguaje natural, soporte multi-divisa (COP, USD, VES), dashboards analíticos en tiempo real, seguimiento de presupuesto, transacciones recurrentes y autenticación con Google OAuth. Construida con Next.js 16 y PostgreSQL vía InsForge.",
+    },
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Google OAuth", "Claude AI"],
+    image: "/projects/expense-manager.webp",
+    liveUrl: "https://expense-manager-pied-three.vercel.app/login",
+    codeUrl: "https://github.com/Sanghel/expense-manager",
+    featured: true,
+  },
+  {
     slug: "solar-system-3d",
     title: {
       en: "Solar System 3D",
