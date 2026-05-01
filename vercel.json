@@ -2,14 +2,5 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "astro",
-  "rewrites": [
-    {
-      "source": "/expense-manager/:path*",
-      "destination": "https://expense-manager-pied-three.vercel.app/:path*"
-    },
-    {
-      "source": "/solar-system-3d/:path*",
-      "destination": "https://solar-system-3d-opal.vercel.app/:path*"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/$1" }]
 }
