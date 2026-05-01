@@ -35,7 +35,7 @@ export const projects: Project[] = [
     },
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Google OAuth", "Claude AI"],
     image: expenseManagerImg,
-    liveUrl: "https://expense-manager-pied-three.vercel.app/login",
+    liveUrl: "https://expense-manager.sanghel.dev/login",
     codeUrl: "https://github.com/Sanghel/expense-manager",
     featured: true,
   },
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     },
     tags: ["Three.js", "React Three Fiber", "React", "TypeScript"],
     image: solarSystemImg,
-    liveUrl: "https://solar-system-3d-opal.vercel.app/",
+    liveUrl: "https://solar-system-3d.sanghel.dev",
     codeUrl: "https://github.com/Sanghel/solar-system-3d",
   },
   {
