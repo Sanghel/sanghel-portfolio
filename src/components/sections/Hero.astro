@@ -1,8 +1,56 @@
 ---
+import { engineInputs, engineOutputs, aiTools } from '../../content/engine';
+
 interface Props {
   t: (key: string) => string;
+  lang: 'en' | 'es';
 }
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+
+/*
+ * The cover is one diagram on a fixed 1200x560 canvas that is scaled as a whole,
+ * so the SVG viewBox units and the CSS `offset-path` coordinates share one grid.
+ *
+ * Core sits at (600, 272) with a 420px outer ring, and the h1 is rendered on top
+ * of it. Riders stop at x=385 / x=815 so they dissolve on the outer ring, well
+ * clear of the name.
+ */
+const IN_PATHS = [
+  'M -260 96 C 250 96, 320 196, 385 240',
+  'M -260 272 C 200 272, 300 272, 380 272',
+  'M -260 448 C 250 448, 320 348, 385 304',
+];
+
+const OUT_PATHS = [
+  'M 815 240 C 880 196, 950 96, 1460 96',
+  'M 820 272 C 900 272, 1000 272, 1460 272',
+  'M 815 304 C 880 348, 950 448, 1460 448',
+];
+
+/* Short dashed lines dropping from the core toward the AI strip below. */
+const DESCENDERS = [
+  'M 600 486 C 600 518, 505 520, 478 550',
+  'M 600 486 L 600 550',
+  'M 600 486 C 600 518, 695 520, 722 550',
+];
+
+const IN_DURATIONS = [12, 10.5, 13];
+const OUT_DURATIONS = [9, 8, 10];
+
+/* Round-robin so every lane carries a mix of tech / idea / dream. */
+const inLanes = [0, 1, 2].map((lane) => engineInputs.filter((_, i) => i % 3 === lane));
+const outLanes = [0, 1, 2].map((lane) => engineOutputs.filter((_, i) => i % 3 === lane));
+
+/*
+ * `--p` is the motion path, `--d` the resting position used when motion is reduced.
+ * The negative delay pre-fills the lane so the flow is already populated on load
+ * instead of starting empty.
+ */
+const rider = (path: string, duration: number, i: number, total: number) =>
+  `--p: path("${path}");` +
+  ` --d: ${(((i + 0.5) / total) * 78).toFixed(1)}%;` +
+  ` animation-duration: ${duration}s;` +
+  ` animation-delay: -${((duration * i) / total).toFixed(2)}s;`;
 ---
 
 <section id="hero" class="hero" aria-label="Hero">
@@ -14,42 +62,96 @@ const { t } = Astro.props;
     <div class="hero-grid"></div>
   </div>
 
-  <div class="container hero-content">
-    <!-- Greeting badge — animated via CSS @keyframes (works in all browsers) -->
-    <div class="hero-badge hero-anim-1" id="hero-badge">
-      <span class="hero-badge-dot"></span>
-      <span>{t('hero.greeting')}</span>
+  <div class="engine-stage engine-enter" id="engine-stage">
+    <div class="e-canvas">
+      <svg class="e-svg" viewBox="0 0 1200 560" fill="none" preserveAspectRatio="none" aria-hidden="true">
+        {[...IN_PATHS, ...OUT_PATHS].map((d, i) => (
+          <>
+            <path class="e-track" d={d} />
+            <path class="e-flow" d={d} style={`animation-delay: -${i * 0.45}s;`} />
+          </>
+        ))}
+        {DESCENDERS.map((d, i) => (
+          <path class="e-flow e-descender" d={d} style={`animation-delay: -${i * 0.6}s;`} />
+        ))}
+      </svg>
+
+      <!-- Inputs: technologies, ideas and dreams streaming toward the core -->
+      <div class="e-lanes e-lanes-in" aria-hidden="true">
+        {inLanes.map((lane, li) => (
+          <div class="e-lane">
+            {lane.map((item, i) => (
+              <span class="e-pill" data-kind={item.kind} style={rider(IN_PATHS[li], IN_DURATIONS[li], i, lane.length)}>
+                <i class="e-dot"></i>
+                {item.prefix && <em class="e-prefix">{item.prefix}</em>}
+                <span class="e-text">{item.label[lang]}</span>
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <!-- The core is the identity: rings orbit the name itself -->
+      <div class="e-core">
+        <div class="e-rings" aria-hidden="true">
+          <div class="e-glow"></div>
+          <div class="e-ring e-ring-1"></div>
+          <div class="e-ring e-ring-2"></div>
+          <div class="e-ring e-ring-3"></div>
+        </div>
+        <div class="e-core-label">
+          <span class="e-role hero-anim-1">{t('hero.role')}</span>
+          <h1 class="e-name hero-anim-2"><span class="gradient-text">{t('hero.name')}</span></h1>
+        </div>
+      </div>
+
+      <!-- Outputs: what actually ships -->
+      <div class="e-lanes e-lanes-out" aria-hidden="true">
+        {outLanes.map((lane, li) => (
+          <div class="e-lane">
+            {lane.map((item, i) => (
+              <span class="e-out" style={rider(OUT_PATHS[li], OUT_DURATIONS[li], i, lane.length)}>
+                <em class="e-tag">[ {item.tag} ]</em>
+                <span class="e-text">{item.label[lang]}</span>
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
+  </div>
 
-    <!-- Name heading -->
-    <h1 class="hero-name hero-anim-2" id="hero-name">
-      <span class="hero-name-text gradient-text">{t('hero.name')}</span>
-    </h1>
+  <p class="e-sr">{t('engine.a11y')}</p>
 
-    <!-- Role -->
-    <p class="hero-role hero-anim-3" id="hero-role">
-      <span class="hero-role-wrapper">{t('hero.role')}</span>
-    </p>
-
-    <!-- Tagline -->
-    <p class="hero-tagline hero-anim-4" id="hero-tagline">{t('hero.tagline')}</p>
-
-    <!-- CTAs -->
-    <div class="hero-ctas hero-anim-5" id="hero-ctas">
+  <div class="container hero-below">
+    <p class="hero-tagline hero-anim-3">{t('hero.tagline')}</p>
+    <div class="hero-ctas hero-anim-4">
       <a href="#projects" class="cta-primary">
         {t('hero.cta_primary')}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <a href="/sanghel_cv.pdf" download class="cta-secondary">{t('hero.cta_secondary')}</a>
     </div>
+  </div>
 
-    <!-- Scroll indicator -->
-    <div class="scroll-indicator hero-anim-6" id="hero-scroll" aria-hidden="true">
-      <span class="scroll-line"></span>
-      <span class="scroll-label">{t('hero.scroll')}</span>
-    </div>
+  <div class="container e-ai hero-anim-5">
+    <span class="e-ai-label">{t('engine.ai_label')}</span>
+    <ul class="e-ai-list">
+      {aiTools.map((tool) => (
+        <li class="e-ai-item">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d={tool.path} fill="currentColor" />
+          </svg>
+          <span>{tool.name}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="scroll-indicator hero-anim-6" aria-hidden="true">
+    <span class="scroll-line"></span>
+    <span class="scroll-label">{t('hero.scroll')}</span>
   </div>
 </section>
 
@@ -60,9 +162,18 @@ const { t } = Astro.props;
     min-height: 100svh;    /* Modern: excludes mobile browser chrome */
     display: -webkit-flex;
     display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
     -webkit-align-items: center;
     align-items: center;
-    overflow: hidden;
+    -webkit-justify-content: center;
+    justify-content: center;
+    /* clip horizontally only: the blobs and the canvas are already clipped by
+       their own wrappers, and `overflow: hidden` here would cut content off on
+       very short viewports instead of letting the section grow past 100svh */
+    overflow-x: clip;
+    padding-top: 88px;
+    padding-bottom: 2rem;
   }
 
   /* ─── Background blobs ──── */
@@ -137,84 +248,326 @@ const { t } = Astro.props;
     50% { transform: translate(-15px, 20px); }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-blob { animation: none; }
-  }
-
-  /* ─── Content ──── */
-  .hero-content {
+  /* ─── Stage ────
+     Fixed 1200x560 canvas scaled as a unit. Scale is driven by viewport HEIGHT,
+     because height is what constrains a full-screen cover; the horizontal edges
+     are clipped and masked anyway. */
+  .engine-stage {
+    --s: 1;
     position: relative;
     z-index: 1;
-    padding-top: 96px;
-    padding-bottom: 80px;
+    width: 100%;
+    max-width: 1400px;
+    height: calc(560px * var(--s));
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%);
   }
 
-  .hero-badge {
+  @media (max-height: 900px) { .engine-stage { --s: 0.88; } }
+  @media (max-height: 800px) { .engine-stage { --s: 0.78; } }
+  @media (max-height: 700px) { .engine-stage { --s: 0.68; } }
+  @media (max-height: 620px) { .engine-stage { --s: 0.58; } }
+
+  .e-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1200px;
+    height: 560px;
+    -webkit-transform: translate(-50%, -50%) scale(var(--s));
+    transform: translate(-50%, -50%) scale(var(--s));
+  }
+
+  /* ─── Connector lines ──── */
+  /* overflow:visible so the lead-in/lead-out tails render outside the 1200x560
+     box, matching the riders, which travel from x=-260 to x=1460 */
+  .e-svg {
+    position: absolute;
+    inset: 0;
+    width: 1200px;
+    height: 560px;
+    overflow: visible;
+  }
+
+  .e-track {
+    stroke: rgba(184, 186, 255, 0.12);
+    stroke-width: 1;
+  }
+
+  .e-flow {
+    stroke: rgba(201, 232, 255, 0.55);
+    stroke-width: 1.25;
+    stroke-dasharray: 6 14;
+    stroke-linecap: round;
+    -webkit-animation: e-dash 3s linear infinite;
+    animation: e-dash 3s linear infinite;
+  }
+
+  .e-descender {
+    stroke: rgba(185, 240, 215, 0.45);
+  }
+
+  @-webkit-keyframes e-dash {
+    to { stroke-dashoffset: -40; }
+  }
+  @keyframes e-dash {
+    to { stroke-dashoffset: -40; }
+  }
+
+  /* ─── Riders (pills travelling the paths) ──── */
+  .e-lanes {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .e-pill,
+  .e-out {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: -webkit-inline-flex;
     display: inline-flex;
+    -webkit-align-items: center;
     align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 99px;
-    background: rgba(184, 186, 255, 0.10);
-    border: 1px solid rgba(184, 186, 255, 0.25);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: #C9E8FF;
-    margin-bottom: 1.75rem;
+    gap: 0.4rem;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1;
+    offset-path: var(--p);
+    offset-rotate: 0deg;
+    offset-distance: 0%;
+    -webkit-animation: e-ride linear infinite;
+    animation: e-ride linear infinite;
   }
 
-  .hero-badge-dot {
-    display: block;
+  .e-pill {
+    padding: 8px 14px;
+    border-radius: 99px;
+    /* Solid-ish fill rather than backdrop-filter: these are moving, and blurring
+       the backdrop on 12 animated elements is expensive for no visual gain here. */
+    background: rgba(14, 14, 26, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .e-out {
+    padding: 6px 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .e-text { color: #94a3b8; }
+
+  .e-prefix {
+    font-style: normal;
+    color: #C9E8FF;
+  }
+
+  .e-tag {
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #B9F0D7;
+  }
+
+  .e-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
     background: #B8BAFF;
-    box-shadow: 0 0 6px #B8BAFF;
-    animation: pulse-dot 2s ease-in-out infinite;
   }
 
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px #B8BAFF; }
-    50% { opacity: 0.6; box-shadow: 0 0 12px #B8BAFF; }
+  .e-pill[data-kind='idea'] .e-dot { background: #C9E8FF; }
+  .e-pill[data-kind='dream'] .e-dot { background: #B9F0D7; }
+
+  /* Fade in just after birth, dissolve on the outer ring / at the edge. */
+  @-webkit-keyframes e-ride {
+    0%   { offset-distance: 0%; opacity: 0; }
+    7%   { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+  @keyframes e-ride {
+    0%   { offset-distance: 0%; opacity: 0; }
+    7%   { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
   }
 
-  .hero-name {
-    font-size: clamp(2.75rem, 8vw, 6rem);
-    line-height: 1.05;
-    margin: 0 0 1rem;
+  /* ─── Core ──── */
+  .e-core {
+    position: absolute;
+    top: 272px;
+    left: 600px;
+    width: 420px;
+    height: 420px;
+    margin: -210px 0 0 -210px;
+    z-index: 3;
+  }
+
+  .e-rings {
+    position: absolute;
+    inset: 0;
+  }
+
+  .e-glow {
+    position: absolute;
+    inset: 16%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, rgba(184, 186, 255, 0.26), rgba(12, 12, 22, 0) 70%);
+  }
+
+  /* Sonar ping radiating out of the core */
+  .e-rings::before {
+    content: '';
+    position: absolute;
+    inset: 25%;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 232, 255, 0.45);
+    -webkit-animation: e-ping 3.2s ease-out infinite;
+    animation: e-ping 3.2s ease-out infinite;
+  }
+
+  @-webkit-keyframes e-ping {
+    0%        { -webkit-transform: scale(1); transform: scale(1); opacity: 0.5; }
+    70%, 100% { -webkit-transform: scale(1.9); transform: scale(1.9); opacity: 0; }
+  }
+  @keyframes e-ping {
+    0%        { -webkit-transform: scale(1); transform: scale(1); opacity: 0.5; }
+    70%, 100% { -webkit-transform: scale(1.9); transform: scale(1.9); opacity: 0; }
+  }
+
+  .e-ring {
+    position: absolute;
+    border: 1px solid rgba(184, 186, 255, 0.18);
+    border-radius: 50%;
+  }
+
+  /* Orbiting dot on each ring */
+  .e-ring::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    border-radius: 50%;
+  }
+
+  .e-ring-1 {
+    inset: 0;
+    -webkit-animation: e-spin 24s linear infinite;
+    animation: e-spin 24s linear infinite;
+  }
+  .e-ring-1::after {
+    background: #B8BAFF;
+    box-shadow: 0 0 10px rgba(184, 186, 255, 0.9);
+  }
+
+  .e-ring-2 {
+    inset: 13%;
+    -webkit-animation: e-spin 18s linear infinite reverse;
+    animation: e-spin 18s linear infinite reverse;
+  }
+  .e-ring-2::after {
+    background: #C9E8FF;
+    box-shadow: 0 0 10px rgba(201, 232, 255, 0.9);
+  }
+
+  .e-ring-3 {
+    inset: 25%;
+    border-color: rgba(185, 240, 215, 0.16);
+    -webkit-animation: e-spin 30s linear infinite;
+    animation: e-spin 30s linear infinite;
+  }
+  .e-ring-3::after {
+    background: #B9F0D7;
+    box-shadow: 0 0 10px rgba(185, 240, 215, 0.85);
+  }
+
+  @-webkit-keyframes e-spin {
+    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+  @keyframes e-spin {
+    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+
+  /* Identity sits on top of the rings, allowed to run wider than the core box */
+  .e-core-label {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -120px;
+    right: -120px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 1;
+  }
+
+  .e-role {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C9E8FF;
+  }
+
+  .e-name {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.1;
     letter-spacing: -0.03em;
+    white-space: nowrap;
+    margin: 0;
+    /* Dark halo so the name stays legible over the rings */
+    text-shadow: 0 0 30px #0c0c16, 0 0 14px #0c0c16;
   }
 
-  .hero-name-text {
-    display: block;
-  }
-
-  .hero-role {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    font-weight: 600;
-    color: #64748b;
-    margin: 0 0 1.25rem;
-    letter-spacing: -0.01em;
+  /* ─── Tagline + CTA ──── */
+  .hero-below {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 0.5rem;
   }
 
   .hero-tagline {
     font-size: clamp(1rem, 2vw, 1.125rem);
     color: #64748b;
-    max-width: 520px;
     line-height: 1.65;
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.5rem;
   }
 
   .hero-ctas {
+    display: -webkit-flex;
     display: flex;
+    -webkit-align-items: center;
     align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
     gap: 12px;
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 
   .cta-primary {
+    display: -webkit-inline-flex;
     display: inline-flex;
+    -webkit-align-items: center;
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
@@ -234,35 +587,81 @@ const { t } = Astro.props;
     box-shadow: 0 8px 32px rgba(184, 186, 255, 0.40);
   }
 
-  .cta-secondary {
-    display: inline-flex;
+  /* ─── AI strip ──── */
+  .e-ai {
+    position: relative;
+    z-index: 2;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #94a3b8;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    text-decoration: none;
-    backdrop-filter: blur(8px);
-    transition: all 0.2s ease;
+    gap: 1rem;
+    margin-top: 2.5rem;
   }
 
-  .cta-secondary:hover {
-    color: #f1f5f9;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
+  .e-ai-label {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #475569;
+  }
+
+  .e-ai-list {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+    gap: 0.5rem 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .e-ai-item {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #64748b;
+    opacity: 0.55;
+    transition: opacity 0.25s ease, color 0.25s ease;
+  }
+
+  .e-ai-item:hover {
+    opacity: 1;
+    color: #C9E8FF;
+  }
+
+  /* ─── Screen-reader description of the decorative flow ──── */
+  .e-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* ─── Scroll indicator ──── */
   .scroll-indicator {
+    position: relative;
+    z-index: 2;
+    display: -webkit-flex;
     display: flex;
+    -webkit-align-items: center;
     align-items: center;
     gap: 12px;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
     color: #475569;
   }
 
@@ -298,33 +697,41 @@ const { t } = Astro.props;
     text-transform: uppercase;
   }
 
-  /* ─── Hero entrance: pure CSS animation — works in Safari, Chrome, Firefox ── */
-  @-webkit-keyframes hero-in {
-    from {
-      opacity: 0;
-      -webkit-transform: translateY(22px);
-      transform: translateY(22px);
-    }
-    to {
-      opacity: 1;
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
-  }
-  @keyframes hero-in {
-    from {
-      opacity: 0;
-      -webkit-transform: translateY(22px);
-      transform: translateY(22px);
-    }
-    to {
-      opacity: 1;
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
+  /* Not enough vertical room for an affordance once the cover is this dense */
+  @media (max-height: 820px) {
+    .scroll-indicator { display: none; }
   }
 
-  /* Shared animation — fill:both keeps element hidden before delay fires */
+  /* ─── Paused while off-screen (class toggled by the script below) ──── */
+  .engine-stage.is-idle .e-pill,
+  .engine-stage.is-idle .e-out,
+  .engine-stage.is-idle .e-flow,
+  .engine-stage.is-idle .e-ring,
+  .engine-stage.is-idle .e-rings::before {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+
+  /* ─── Entrance ──── */
+  @-webkit-keyframes hero-in {
+    from { opacity: 0; -webkit-transform: translateY(22px); transform: translateY(22px); }
+    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+  }
+  @keyframes hero-in {
+    from { opacity: 0; -webkit-transform: translateY(22px); transform: translateY(22px); }
+    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+  }
+
+  @-webkit-keyframes engine-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes engine-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* fill:both keeps each element hidden until its delay fires */
   .hero-anim-1,
   .hero-anim-2,
   .hero-anim-3,
@@ -333,74 +740,187 @@ const { t } = Astro.props;
   .hero-anim-6 {
     -webkit-animation-name: hero-in;
     animation-name: hero-in;
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }
 
-  .hero-anim-1 { -webkit-animation-duration: 0.55s; animation-duration: 0.55s; -webkit-animation-delay: 0.15s; animation-delay: 0.15s; }
-  .hero-anim-2 { -webkit-animation-duration: 0.75s; animation-duration: 0.75s; -webkit-animation-delay: 0.3s;  animation-delay: 0.3s;  }
-  .hero-anim-3 { -webkit-animation-duration: 0.6s;  animation-duration: 0.6s;  -webkit-animation-delay: 0.5s;  animation-delay: 0.5s;  }
-  .hero-anim-4 { -webkit-animation-duration: 0.6s;  animation-duration: 0.6s;  -webkit-animation-delay: 0.64s; animation-delay: 0.64s; }
-  .hero-anim-5 { -webkit-animation-duration: 0.55s; animation-duration: 0.55s; -webkit-animation-delay: 0.78s; animation-delay: 0.78s; }
-  .hero-anim-6 { -webkit-animation-duration: 0.45s; animation-duration: 0.45s; -webkit-animation-delay: 1s;    animation-delay: 1s;    }
+  .hero-anim-1 { -webkit-animation-delay: 0.25s; animation-delay: 0.25s; }
+  .hero-anim-2 { -webkit-animation-delay: 0.4s;  animation-delay: 0.4s; }
+  .hero-anim-3 { -webkit-animation-delay: 0.6s;  animation-delay: 0.6s; }
+  .hero-anim-4 { -webkit-animation-delay: 0.75s; animation-delay: 0.75s; }
+  .hero-anim-5 { -webkit-animation-delay: 0.9s;  animation-delay: 0.9s; }
+  .hero-anim-6 { -webkit-animation-delay: 1.05s; animation-delay: 1.05s; }
 
+  .engine-enter {
+    -webkit-animation: engine-in 1s ease 0.1s both;
+    animation: engine-in 1s ease 0.1s both;
+  }
+
+  /* ─── Small screens: name over the rings, inputs/outputs as compact clouds ──── */
+  @media (max-width: 900px) {
+    .hero {
+      padding-top: 96px;
+      padding-bottom: 3rem;
+      -webkit-justify-content: flex-start;
+      justify-content: flex-start;
+    }
+
+    .engine-stage {
+      height: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .e-canvas {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 100%;
+      height: auto;
+      -webkit-transform: none;
+      transform: none;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 clamp(1.25rem, 5vw, 2rem);
+    }
+
+    .e-svg { display: none; }
+
+    .e-lanes {
+      position: static;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Flatten the three lanes into a single wrapping cloud */
+    .e-lane { display: contents; }
+
+    /* Trim the cloud so the cover stays a cover */
+    .e-lanes-in .e-pill:nth-child(n + 3) { display: none; }
+    .e-lanes-out .e-out:nth-child(n + 2) { display: none; }
+
+    .e-pill,
+    .e-out {
+      position: static;
+      offset-path: none;
+      -webkit-animation: none;
+      animation: none;
+      opacity: 1;
+      font-size: 12px;
+    }
+
+    .e-core {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 3.5rem 0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+
+    .e-rings {
+      position: absolute;
+      /* `inset` first — it would reset top/left back to auto if declared after */
+      inset: auto;
+      top: 50%;
+      left: 50%;
+      width: 250px;
+      height: 250px;
+      margin: -125px 0 0 -125px;
+    }
+
+    .e-core-label {
+      position: static;
+      inset: auto;
+      width: 100%;
+    }
+
+    .e-name {
+      font-size: clamp(1.75rem, 8.5vw, 2.5rem);
+      white-space: normal;
+    }
+
+    .e-ai { margin-top: 2rem; }
+    .e-ai-list { gap: 0.5rem 1.25rem; }
+  }
+
+  /* ─── Reduced motion: freeze the cover as a static illustration ──── */
   @media (prefers-reduced-motion: reduce) {
+    .hero-blob,
+    .e-flow,
+    .e-ring,
+    .e-rings::before,
+    .scroll-line::after {
+      -webkit-animation: none;
+      animation: none;
+    }
+
+    .e-rings::before { opacity: 0.3; }
+
+    .e-pill,
+    .e-out {
+      -webkit-animation: none;
+      animation: none;
+      offset-distance: var(--d);
+      opacity: 1;
+    }
+
     .hero-anim-1,
     .hero-anim-2,
     .hero-anim-3,
     .hero-anim-4,
     .hero-anim-5,
-    .hero-anim-6 {
+    .hero-anim-6,
+    .engine-enter {
       -webkit-animation: none;
       animation: none;
       opacity: 1;
-      -webkit-transform: none;
-      transform: none;
     }
-
-    .hero-role-wrapper::before { animation: none; }
-  }
-
-  /* ─── Role shimmer border ──────────────────────────────── */
-  @property --shimmer-angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-  }
-
-  .hero-role-wrapper {
-    position: relative;
-    display: inline-block;
-    padding: 0.1em 0.5em;
-    border-radius: 6px;
-  }
-
-  .hero-role-wrapper::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 7px;
-    padding: 1px;
-    background: conic-gradient(
-      from var(--shimmer-angle),
-      transparent 0deg,
-      transparent 260deg,
-      rgba(184, 186, 255, 0.4) 310deg,
-      #C9E8FF 340deg,
-      rgba(185, 240, 215, 0.5) 360deg
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: shimmer-rotate 3.5s linear infinite;
-    pointer-events: none;
-  }
-
-  @keyframes shimmer-rotate {
-    to { --shimmer-angle: 360deg; }
   }
 </style>
+
+<script>
+  // Pause the diagram while it is off-screen. Default is running, so the
+  // animation still works if this script never executes.
+  function initHeroEngine() {
+    const stage = document.getElementById('engine-stage');
+    if (!stage || stage.dataset.engineReady) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stage.dataset.engineReady = '1';
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          stage.classList.toggle('is-idle', !entry.isIntersecting);
+        }
+      },
+      { rootMargin: '120px' }
+    );
+
+    observer.observe(stage);
+  }
+
+  initHeroEngine();
+  document.addEventListener('astro:page-load', initHeroEngine);
+</script>

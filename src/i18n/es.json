@@ -6,16 +6,19 @@
     "experience": "Experiencia",
     "contact": "Contacto",
     "hire": "Contrátame",
-    "achievements": "Logros"
+    "achievements": "Logros",
+    "cv": "CV"
   },
   "hero": {
-    "greeting": "Hola, soy",
     "name": "Sanghel González",
     "role": "Software Developer",
-    "tagline": "Construyo experiencias web premium que son rápidas, accesibles e impecables.",
+    "tagline": "De la idea al producto lanzado.",
     "cta_primary": "Ver proyectos",
-    "cta_secondary": "Descargar CV",
     "scroll": "Desplazar"
+  },
+  "engine": {
+    "ai_label": "Con IA en el proceso",
+    "a11y": "Diagrama decorativo: tecnologías, ideas y sueños fluyen desde la izquierda hacia el centro, y salen por la derecha como productos, plataformas, aplicaciones, APIs, dashboards y design systems. Debajo, las herramientas de IA que uso en el camino: ChatGPT, Claude, Gemini, GitHub Copilot y v0."
   },
   "about": {
     "section_label": "Sobre mí",
@@ -64,7 +67,8 @@
     "email_label": "Email",
     "copy": "Copiar",
     "copied": "¡Copiado!",
-    "or": "o encuéntrame en"
+    "or": "o encuéntrame en",
+    "cv": "Descargar CV"
   },
   "footer": {
     "made_with": "Creado con",

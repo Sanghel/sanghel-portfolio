@@ -6,16 +6,19 @@
     "experience": "Experience",
     "contact": "Contact",
     "hire": "Hire me",
-    "achievements": "Awards"
+    "achievements": "Awards",
+    "cv": "CV"
   },
   "hero": {
-    "greeting": "Hi, I'm",
     "name": "Sanghel González",
     "role": "Software Developer",
-    "tagline": "I build premium web experiences that are fast, accessible, and delightful.",
+    "tagline": "From idea to shipped product.",
     "cta_primary": "View my work",
-    "cta_secondary": "Download CV",
     "scroll": "Scroll down"
+  },
+  "engine": {
+    "ai_label": "With AI in the loop",
+    "a11y": "Decorative diagram: technologies, ideas and dreams flow in from the left toward the centre, and leave on the right as products, platforms, applications, APIs, dashboards and design systems. Below, the AI tools used along the way: ChatGPT, Claude, Gemini, GitHub Copilot and v0."
   },
   "about": {
     "section_label": "About me",
@@ -64,7 +67,8 @@
     "email_label": "Email",
     "copy": "Copy",
     "copied": "Copied!",
-    "or": "or find me on"
+    "or": "or find me on",
+    "cv": "Download CV"
   },
   "footer": {
     "made_with": "Crafted with",
