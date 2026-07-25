@@ -14,7 +14,8 @@ export interface Project {
   title: { en: string; es: string };
   description: { en: string; es: string };
   tags: string[];
-  image: string | ImageMetadata;
+  /** Omit while a screenshot is pending — the card falls back to the initial-letter placeholder */
+  image?: string | ImageMetadata;
   liveUrl?: string;
   codeUrl?: string;
   featured?: boolean;
@@ -23,6 +24,37 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  // TODO: add `image: fmfPartnersImg` (src/assets/projects/fmf_partners.webp) once available.
+  {
+    slug: "fix-my-fees-partners",
+    title: {
+      en: "Fix My Fees — Partners Portal",
+      es: "Fix My Fees — Portal de Partners",
+    },
+    description: {
+      en: "Partner and staff SPA for a payment-processing fee-reduction platform. Two hard-isolated areas behind one app: Brand Partners get a dashboard with commissions, residuals, wallet, training and support, while FMF staff manage accounts and merchants, mint backend-signed merchant register links, and run a full RBAC system of roles and permissions. ~1,000 TS/TSX files with 308 test suites at a 70% coverage threshold.",
+      es: "SPA de partners y staff para una plataforma de reducción de comisiones de procesamiento de pagos. Dos áreas aisladas dentro de una misma app: los Brand Partners tienen dashboard con comisiones, residuales, wallet, training y soporte, mientras el staff de FMF gestiona cuentas y merchants, genera register-links firmados por el backend y opera un sistema RBAC completo de roles y permisos. ~1.000 archivos TS/TSX con 308 suites de test y umbral de cobertura del 70%.",
+    },
+    tags: ["React 19", "TypeScript", "Ant Design", "TanStack Query", "Zustand", "Vite", "Vitest", "AWS ECS"],
+    liveUrl: "https://partners.fmf-test.com/?sponsor=sanghel",
+    isPrivate: true,
+    featured: true,
+  },
+  // TODO: add `image: fmfMerchantsImg` (src/assets/projects/fmf_merchants.webp) once available.
+  {
+    slug: "fix-my-fees-merchants",
+    title: {
+      en: "Fix My Fees — Merchants Portal",
+      es: "Fix My Fees — Portal de Merchants",
+    },
+    description: {
+      en: "Merchant-facing SPA covering the full journey from campaign landing to approved application: six code-split marketing funnels, self-registration through a signed referral link, and a multi-phase onboarding flow with owners, a processor-driven dynamic field catalog, bank statements, KYC documents and in-browser MPA contract signing with pdf-lib.",
+      es: "SPA de cara al comercio que cubre todo el recorrido desde la landing de campaña hasta la aplicación aprobada: seis funnels de marketing con code-splitting, auto-registro mediante referral link firmado, y un onboarding multi-fase con owners, catálogo dinámico de campos por procesador, estados de cuenta, documentos KYC y firma del contrato MPA en el navegador con pdf-lib.",
+    },
+    tags: ["React 19", "TypeScript", "Ant Design", "React Hook Form", "TanStack Query", "Vite", "pdf-lib", "Vitest"],
+    liveUrl: "https://merchants.fmf-test.com/?sponsor=sanghel",
+    isPrivate: true,
+  },
   {
     slug: "expense-manager",
     title: {
@@ -37,7 +69,6 @@ export const projects: Project[] = [
     image: expenseManagerImg,
     liveUrl: "https://expense-manager.sanghel.dev/login",
     codeUrl: "https://github.com/Sanghel/expense-manager",
-    featured: true,
   },
   {
     slug: "solar-system-3d",
