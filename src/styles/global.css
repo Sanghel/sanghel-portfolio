@@ -179,6 +179,26 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(0);
 }
 
+/* On narrow screens the horizontal offset is what creates a slight horizontal
+   scroll: a .reveal-right element sits 36px to the right of its resting place
+   until it scrolls into view, which pushes it past the viewport edge. Reveal
+   vertically instead — the sideways slide barely reads at this width anyway.
+   Breakpoint is 1120px, not a mobile width: .container is 1100px wide, so the
+   36px offset clears the viewport edge on anything narrower than ~1108px. */
+@media (max-width: 1120px) {
+  .reveal-left,
+  .reveal-right {
+    -webkit-transform: translateY(24px);
+    transform: translateY(24px);
+  }
+
+  .reveal-left.is-visible,
+  .reveal-right.is-visible {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
 /* ─── Reduced motion ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .reveal,
