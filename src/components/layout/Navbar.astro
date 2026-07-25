@@ -29,6 +29,7 @@ const { lang, t } = Astro.props;
 
     <!-- Right side actions -->
     <div class="navbar-actions">
+      <a href="/sanghel_cv.pdf" download class="btn-cv">{t('nav.cv')}</a>
       <LangToggle lang={lang} client:load />
       <a href="#contact" class="btn-hire">{t('nav.hire')}</a>
     </div>
@@ -52,6 +53,7 @@ const { lang, t } = Astro.props;
       <li><a href="#contact" class="mobile-link">{t('nav.contact')}</a></li>
     </ul>
     <div style="display: flex; align-items: center; gap: 12px; padding: 1rem 0 0.5rem;">
+      <a href="/sanghel_cv.pdf" download class="btn-cv">{t('nav.cv')}</a>
       <LangToggle lang={lang} client:load />
       <a href="#contact" class="btn-hire">{t('nav.hire')}</a>
     </div>
@@ -130,6 +132,29 @@ const { lang, t } = Astro.props;
 
   @media (max-width: 768px) {
     .navbar-actions { display: none; }
+  }
+
+  /* Ghost counterpart to .btn-hire — keeps the CV one click away from any scroll position */
+  .btn-cv {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-cv:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
   }
 
   .btn-hire {
@@ -222,9 +247,13 @@ const { lang, t } = Astro.props;
 </style>
 
 <script>
+  function initNavbar() {
   const navbar = document.getElementById('navbar');
   const menuBtn = document.getElementById('menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+
+  if (!navbar || navbar.dataset.navReady) return;
+  navbar.dataset.navReady = '1';
 
   // Scroll: add .scrolled class
   window.addEventListener('scroll', () => {
@@ -252,4 +281,10 @@ const { lang, t } = Astro.props;
       mobileMenu.setAttribute('aria-hidden', 'true');
     });
   });
+  }
+
+  initNavbar();
+  // Module scripts run once; view transitions swap the DOM without re-running
+  // them, so re-init on every navigation too.
+  document.addEventListener('astro:page-load', initNavbar);
 </script>

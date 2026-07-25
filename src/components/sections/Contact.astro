@@ -56,6 +56,17 @@ const socials = [
           </div>
         </div>
 
+        <!-- CV download — moved here from the cover -->
+        <div class="cv-block reveal">
+          <a href="/sanghel_cv.pdf" download class="cv-btn glass glass-hover">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.5 12v1a1 1 0 001 1h9a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            {t('contact.cv')}
+          </a>
+        </div>
+
         <!-- Divider -->
         <div class="contact-divider reveal">
           <span class="divider-line"></span>
@@ -222,6 +233,29 @@ const socials = [
     to   { transform: scale(1);   opacity: 1; }
   }
 
+  /* ─── CV download ──── */
+  .cv-block {
+    margin-bottom: 1.75rem;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    color: #94a3b8;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .cv-btn:hover {
+    color: #f1f5f9;
+    transform: translateY(-2px);
+  }
+
   /* ─── Divider ──── */
   .contact-divider {
     display: flex;
@@ -271,7 +305,10 @@ const socials = [
 </style>
 
 <script>
+  function initCopyEmail() {
   const copyBtn = document.querySelector<HTMLButtonElement>('.copy-btn');
+  if (!copyBtn || copyBtn.dataset.copyReady) return;
+  copyBtn.dataset.copyReady = '1';
 
   copyBtn?.addEventListener('click', async () => {
     const email = copyBtn.dataset.email ?? '';
@@ -283,4 +320,10 @@ const socials = [
       // no-op
     }
   });
+  }
+
+  initCopyEmail();
+  // Module scripts run once; view transitions swap the DOM without re-running
+  // them, so re-init on every navigation too.
+  document.addEventListener('astro:page-load', initCopyEmail);
 </script>

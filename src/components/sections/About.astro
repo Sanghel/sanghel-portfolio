@@ -220,6 +220,10 @@ const stats = [
 
 <script>
   // ─── Thanos dissolve + materialize effect ────────────────────────────────
+  // The <img> elements are display:none — the canvas is the only thing on
+  // screen, so if this never runs the avatar is simply blank. It must re-run
+  // after every view transition (e.g. the language toggle), not just on load.
+  function initAvatar() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const frame    = document.getElementById('avatar-frame')  as HTMLDivElement    | null;
@@ -227,7 +231,11 @@ const stats = [
   const imgFront = document.getElementById('img-front')     as HTMLImageElement  | null;
   const imgBack  = document.getElementById('img-back')      as HTMLImageElement  | null;
 
-  if (frame && canvas && imgFront && imgBack) {
+  // The flag lives on the node itself: a view transition swaps in a fresh
+  // element, so it is absent again and we re-wire, but a double call on the
+  // same DOM is a no-op.
+  if (frame && canvas && imgFront && imgBack && !frame.dataset.avatarReady) {
+    frame.dataset.avatarReady = '1';
     const SIZE = 320;
     canvas.width  = SIZE;
     canvas.height = SIZE;
@@ -427,8 +435,10 @@ const stats = [
       });
     }
   }
+  }
 
   // ─── Stats counter ────────────────────────────────────────────────────────
+  function initStats() {
   const prefersReducedMotionStats = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!prefersReducedMotionStats) {
@@ -460,7 +470,20 @@ const stats = [
     }, { threshold: 0.5 });
 
     document.querySelectorAll<HTMLElement>('.stat-value[data-target]').forEach((el) => {
+      if (el.dataset.counterReady) return;
+      el.dataset.counterReady = '1';
       io.observe(el);
     });
   }
+  }
+
+  function initAbout() {
+    initAvatar();
+    initStats();
+  }
+
+  initAbout();
+  // Module scripts run once; view transitions swap the DOM without re-running
+  // them, so re-init on every navigation too.
+  document.addEventListener('astro:page-load', initAbout);
 </script>

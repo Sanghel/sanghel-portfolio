@@ -38,9 +38,9 @@ const isLocalImage = (img: unknown): img is ImageMetadata =>
     <div class="projects-grid reveal-stagger">
       {projects.map((project, i) => (
         <article class="project-card glass glass-hover" data-tags={project.tags.join(',')}>
-          <!-- Card image -->
-          <div class="card-image">
-            {isLocalImage(project.image) ? (
+          <!-- Card image — falls back to the initial-letter placeholder when missing -->
+          <div class:list={['card-image', { 'no-image': !project.image }]}>
+            {!project.image ? null : isLocalImage(project.image) ? (
               /* Local image: Astro auto-generates WebP + srcset + correct sizes */
               <Image
                 src={project.image}
