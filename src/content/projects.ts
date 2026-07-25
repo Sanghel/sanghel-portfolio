@@ -8,6 +8,8 @@ import dashboardTicketsImg from "../assets/projects/dashboard_tickets.webp";
 import formbuilderImg from "../assets/projects/formbuilder.webp";
 import solarSystemImg from "../assets/projects/solar_system.webp";
 import expenseManagerImg from "../assets/projects/expense_manager.webp";
+import fmfPartnersImg from "../assets/projects/fmf_partners.webp";
+import fmfMerchantsImg from "../assets/projects/fmf_merchants.webp";
 
 export interface Project {
   slug: string;
@@ -24,7 +26,6 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // TODO: add `image: fmfPartnersImg` (src/assets/projects/fmf_partners.webp) once available.
   {
     slug: "fix-my-fees-partners",
     title: {
@@ -36,11 +37,11 @@ export const projects: Project[] = [
       es: "SPA de partners y staff para una plataforma de reducción de comisiones de procesamiento de pagos. Dos áreas aisladas dentro de una misma app: los Brand Partners tienen dashboard con comisiones, residuales, wallet, training y soporte, mientras el staff de FMF gestiona cuentas y merchants, genera register-links firmados por el backend y opera un sistema RBAC completo de roles y permisos. ~1.000 archivos TS/TSX con 308 suites de test y umbral de cobertura del 70%.",
     },
     tags: ["React 19", "TypeScript", "Ant Design", "TanStack Query", "Zustand", "Vite", "Vitest", "AWS ECS"],
+    image: fmfPartnersImg,
     liveUrl: "https://partners.fmf-test.com/?sponsor=sanghel",
     isPrivate: true,
     featured: true,
   },
-  // TODO: add `image: fmfMerchantsImg` (src/assets/projects/fmf_merchants.webp) once available.
   {
     slug: "fix-my-fees-merchants",
     title: {
@@ -52,6 +53,7 @@ export const projects: Project[] = [
       es: "SPA de cara al comercio que cubre todo el recorrido desde la landing de campaña hasta la aplicación aprobada: seis funnels de marketing con code-splitting, auto-registro mediante referral link firmado, y un onboarding multi-fase con owners, catálogo dinámico de campos por procesador, estados de cuenta, documentos KYC y firma del contrato MPA en el navegador con pdf-lib.",
     },
     tags: ["React 19", "TypeScript", "Ant Design", "React Hook Form", "TanStack Query", "Vite", "pdf-lib", "Vitest"],
+    image: fmfMerchantsImg,
     liveUrl: "https://merchants.fmf-test.com/?sponsor=sanghel",
     isPrivate: true,
   },
