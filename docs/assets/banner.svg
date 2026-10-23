@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-label="Sanghel González — Software Developer portfolio: from idea to shipped product">
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B8BAFF"/>
+      <stop offset="100%" stop-color="#C9E8FF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="73%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="#B8BAFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#B8BAFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B8BAFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#B8BAFF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FFFFFF" fill-opacity="0.06"/>
+    </pattern>
+    <style>
+      .t { font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .m { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .flow { stroke-dasharray: 4 8; animation: flow 1.2s linear infinite; }
+      .spin { transform-origin: 948px 180px; animation: spin 14s linear infinite; }
+      @keyframes flow { to { stroke-dashoffset: -24 } }
+      @keyframes spin { to { transform: rotate(360deg) } }
+      @media (prefers-reduced-motion: reduce) { .flow, .spin { animation: none } }
+    </style>
+  </defs>
+
+  <rect width="1280" height="360" rx="20" fill="#0C0C16"/>
+  <rect width="1280" height="360" rx="20" fill="url(#dots)"/>
+  <rect width="1280" height="360" rx="20" fill="url(#glow)"/>
+
+  <!-- Dev Engine: inputs → core → shipped outputs -->
+  <g fill="none" stroke="#B8BAFF" stroke-opacity="0.45" stroke-width="1.5">
+    <path class="flow" d="M846 110 C 890 110, 900 180, 916 180"/>
+    <path class="flow" d="M846 180 L 916 180"/>
+    <path class="flow" d="M846 250 C 890 250, 900 180, 916 180"/>
+    <path class="flow" d="M980 180 C 996 180, 1006 110, 1040 110" stroke="#B9F0D7"/>
+    <path class="flow" d="M980 180 L 1040 180" stroke="#B9F0D7"/>
+    <path class="flow" d="M980 180 C 996 180, 1006 250, 1040 250" stroke="#B9F0D7"/>
+  </g>
+
+  <g class="m" font-size="14">
+    <rect x="690" y="94" width="156" height="32" rx="8" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.1"/>
+    <text x="768" y="115" text-anchor="middle" fill="#F1F5F9">React</text>
+    <rect x="690" y="164" width="156" height="32" rx="8" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.1"/>
+    <text x="768" y="185" text-anchor="middle" fill="#F1F5F9"><tspan fill="#B8BAFF">idea:</tspan> dashboard</text>
+    <rect x="690" y="234" width="156" height="32" rx="8" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.1"/>
+    <text x="768" y="255" text-anchor="middle" fill="#F1F5F9"><tspan fill="#B9F0D7">dream:</tspan> 1M users</text>
+
+    <circle cx="948" cy="180" r="60" fill="url(#core)"/>
+    <rect class="spin" x="922" y="154" width="52" height="52" rx="12" fill="none" stroke="url(#accent)" stroke-width="2" stroke-dasharray="10 6"/>
+    <rect x="930" y="162" width="36" height="36" rx="9" fill="#0C0C16" stroke="url(#accent)" stroke-width="2"/>
+    <circle cx="948" cy="180" r="6" fill="url(#accent)"/>
+
+    <rect x="1040" y="94" width="176" height="32" rx="8" fill="#B9F0D7" fill-opacity="0.06" stroke="#B9F0D7" stroke-opacity="0.25"/>
+    <text x="1054" y="115" fill="#F1F5F9"><tspan fill="#B9F0D7">[SHIPPED]</tspan> Products</text>
+    <rect x="1040" y="164" width="176" height="32" rx="8" fill="#B9F0D7" fill-opacity="0.06" stroke="#B9F0D7" stroke-opacity="0.25"/>
+    <text x="1054" y="185" fill="#F1F5F9"><tspan fill="#B9F0D7">[LIVE]</tspan> Platforms</text>
+    <rect x="1040" y="234" width="176" height="32" rx="8" fill="#B9F0D7" fill-opacity="0.06" stroke="#B9F0D7" stroke-opacity="0.25"/>
+    <text x="1054" y="255" fill="#F1F5F9"><tspan fill="#B9F0D7">[BUILT]</tspan> Apps</text>
+  </g>
+
+  <g class="t">
+    <text x="94" y="118" fill="#F1F5F9" font-size="34" font-weight="700" letter-spacing="-1">SG</text>
+    <circle cx="151" cy="113" r="9" fill="url(#accent)" fill-opacity="0.2"/>
+    <circle cx="151" cy="113" r="5" fill="url(#accent)"/>
+    <text x="93" y="194" fill="#F1F5F9" font-size="60" font-weight="700" letter-spacing="-1.5">Sanghel González</text>
+    <text x="96" y="236" fill="#94A3B8" font-size="23">Software Developer — from idea to shipped product.</text>
+    <text x="96" y="284" class="m" fill="#B8BAFF" font-size="14" letter-spacing="1">astro · react · tailwind · gsap · en/es</text>
+  </g>
+</svg>
